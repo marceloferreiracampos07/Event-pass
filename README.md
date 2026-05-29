@@ -2,19 +2,27 @@
 
 Projeto de back-end para uma plataforma de venda de ingressos baseada em microsserviços.
 
-## 🛠️ Tecnologias Utilizadas
+## 🚀 Stack Tecnológica Obrigatória
+* **Runtime:** Node.js com TypeScript
+* **Infraestrutura:** Docker e Docker Compose
+* **Autenticação:** better-auth
+* **Banco de Dados & ORM:** MySQL com Prisma
+* **Mensageria:** Redis Pub/Sub
+* **Testes:** Vitest (Unitários e de Integração)
 
-### Geral
-* **Linguagem:** Node.js com TypeScript
-* **Runtime:** Node.js 20+
-* **Containerização:** Docker & Docker Compose
-* **Mensageria:** Redis (Pub/Sub)
+## 🏛️ Princípios Arquiteturais Obrigatórios
+* **Clean Architecture:** Separação clara entre Domínio, Casos de Uso e Infraestrutura.
+* **Domain-Driven Design (DDD):** Entidades de domínio ricas e agnósticas de banco de dados.
+* **Versionamento de API:** Padrão `/api/v1/...`.
+
+---
+
+## 🛠️ Tecnologias por Serviço
 
 ### Identity Service (Autenticação)
 * **Auth:** better-auth
-* **Banco de Dados:** MySQL
-* **ORM:** Prisma
 * **Segurança:** Argon2 (Hash de senha)
+* **Banco:** MySQL + Prisma
 
 ### Catalog, Booking & Notification
 * **Banco de Dados:** MySQL / Redis
@@ -24,7 +32,7 @@ Projeto de back-end para uma plataforma de venda de ingressos baseada em micross
 
 ## 📂 Organização de Pastas
 
-O projeto segue uma estrutura de microsserviços dentro de um único repositório, onde cada serviço é independente:
+O projeto segue uma estrutura de microsserviços independente dentro de um monorepo:
 
 ```text
 projeto-event-pass/
@@ -40,7 +48,7 @@ projeto-event-pass/
 └── docker-compose.yml  # Orquestração de todos os serviços
 ```
 
-## 🚀 Como Executar (Em breve)
+## ⚙️ Como Executar (Em breve)
 
 1. Certifique-se de ter o **Docker** instalado.
 2. Clone o repositório.
