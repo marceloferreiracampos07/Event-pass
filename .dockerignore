@@ -1,0 +1,26 @@
+# Ignorar dependências locais (o Docker vai instalar as dele lá dentro)
+**/node_modules
+
+# Ignorar pastas de build locais
+**/dist
+**/build
+
+# Ignorar arquivos do Git
+.git
+.gitignore
+
+# Ignorar logs e arquivos de configuração de IDEs
+**/.vscode
+**/.idea
+**/*.log
+**/.DS_Store
+**/Thumbs.db
+
+# Ignorar arquivos de ambiente locais (o docker-compose vai injetar as dele)
+**/.env
+**/.env.*
+!**/.env.example
+
+# Ignorar documentações pesadas no build do container
+**/collections
+README.md
