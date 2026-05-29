@@ -13,6 +13,8 @@ Projeto de back-end para uma plataforma de venda de ingressos baseada em micross
 ## 🏛️ Princípios Arquiteturais Obrigatórios
 * **Clean Architecture:** Separação clara entre Domínio, Casos de Uso e Infraestrutura.
 * **Domain-Driven Design (DDD):** Entidades de domínio ricas e agnósticas de banco de dados.
+* **Event-Driven Architecture (EDA):** Comunicação assíncrona baseada em eventos via Redis.
+* **Microsserviços:** Serviços independentes com responsabilidades únicas e bancos próprios.
 * **Versionamento de API:** Padrão `/api/v1/...`.
 
 ---
