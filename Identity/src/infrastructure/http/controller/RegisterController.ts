@@ -5,18 +5,28 @@ import { RegisterUserSchema } from "../schemas/RegisterUser.schema";
 export class RegisterController {
     constructor(private registerUseCase: RegisterUseCase) {}
 
-    async handle(req: Request, res: Response): Promise<void> {
+    async lidar(requisicao: Request, resposta: Response): Promise<void> {
         try {
-            const validatedData = RegisterUserSchema.parse(req.body);
-            const result = await this.registerUseCase.execute(validatedData);
+            const dadosValidados = RegisterUserSchema.parse(requisicao.body);
+            const resultado = await this.registerUseCase.executar(dadosValidados);
             
-            res.status(201).json(result);
-        } catch (error: any) {
-            if (error.name === "ZodError") {
-                res.status(400).json({ errors: error.errors });
+            resposta.status(201).json(resultado);
+        } catch (erro: any) {
+            if (erro.name === "ZodError") {
+                resposta.status(400).json({ errors: erro.errors });
                 return;
             }
-            res.status(400).json({ message: error.message });
+
+            if (erro.message === "Já existe um usuário com esse e-mail no sistema") {
+                resposta.status(409).json({ message: erro.message });
+                return;
+            }
+
+            console.error("Erro interno no RegisterController:", erro);
+            resposta.status(500).json({ 
+                message: "Ocorreu um erro interno no servidor",
+                error: process.env.NODE_ENV === "development" ? erro.message : undefined
+            });
         }
     }
 }

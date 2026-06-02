@@ -5,18 +5,28 @@ import { LoginUserSchema } from "../schemas/LoginUser.schema";
 export class LoginController {
     constructor(private loginUseCase: LoginUsecase) {}
 
-    async handle(req: Request, res: Response): Promise<void> {
+    async lidar(requisicao: Request, resposta: Response): Promise<void> {
         try {
-            const validatedData = LoginUserSchema.parse(req.body);
-            const result = await this.loginUseCase.execute(validatedData);
+            const dadosValidados = LoginUserSchema.parse(requisicao.body);
+            const resultado = await this.loginUseCase.executar(dadosValidados);
             
-            res.status(200).json(result);
-        } catch (error: any) {
-            if (error.name === "ZodError") {
-                res.status(400).json({ errors: error.errors });
+            resposta.status(200).json(resultado);
+        } catch (erro: any) {
+            if (erro.name === "ZodError") {
+                resposta.status(400).json({ errors: erro.errors });
                 return;
             }
-            res.status(401).json({ message: error.message });
+
+            if (erro.message === "E-mail ou senha incorretos") {
+                resposta.status(401).json({ message: erro.message });
+                return;
+            }
+
+            console.error("Erro interno no LoginController:", erro);
+            resposta.status(500).json({ 
+                message: "Ocorreu um erro interno no servidor",
+                error: process.env.NODE_ENV === "development" ? erro.message : undefined
+            });
         }
     }
 }

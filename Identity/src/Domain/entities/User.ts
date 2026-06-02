@@ -1,30 +1,29 @@
-import { error } from "node:console";
+export type PapelUsuario = "ADMIN" | "CUSTOMER";
 
-export type  UserRole = "ADMIN"| "CUSTOMER";
-
-export class User{
+export class Usuario {
     constructor(
-        public readonly Id:string,
-        public name:string,
+        public readonly id: string,
+        public nome: string,
         public email: string,
-        public role: UserRole, 
-        public createdAt: Date
-    ){
-        this.validate();
-
+        public papel: PapelUsuario,
+        public criadoEm: Date,
+        public senha?: string
+    ) {
+        this.validar();
     }
-    private validate():void{
-        if (!this.name || this.name.trim().length === 0) {
-            throw new Error("o nome nao pode ser vazio preencha por gentileza")
+
+    private validar(): void {
+        if (!this.nome || this.nome.trim().length === 0) {
+            throw new Error("O nome não pode ser vazio, preencha por gentileza");
         }
-        if(this.name.trim().length < 3){
-            throw new Error("o nome nao pode ter ser menor do que 3 caracteres")
+
+        if (this.nome.trim().length < 3) {
+            throw new Error("O nome não pode ter menos de 3 caracteres");
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(this.email)) {
-            throw new Error("o email nao possui formato de email ");
-            
+            throw new Error("O e-mail não possui um formato válido");
         }
     }
 }

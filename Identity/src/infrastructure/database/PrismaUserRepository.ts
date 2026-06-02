@@ -1,72 +1,80 @@
 import { prisma } from "./prisma"; 
-import { User, UserRole } from "../../Domain/entities/User";
-import { IUserRepository } from "../../Domain/repositories/IUserRepository";
+import { Usuario, PapelUsuario } from "../../Domain/entities/User";
+import { IRepositorioUsuario } from "../../Domain/repositories/IUserRepository";
+import crypto from "crypto";
 
-export class PrismaUserRepository implements IUserRepository {
+export class PrismaUserRepository implements IRepositorioUsuario {
     
-    async findByEmail(email: string): Promise<User | null> {
+    async buscarPorEmail(email: string): Promise<Usuario | null> {
         try {
-            const prismaUser = await prisma.user.findUnique({ where: { email } });
+            const usuarioPrisma = await prisma.user.findUnique({ 
+                where: { email },
+                include: { 
+                    accounts: {
+                        where: {
+                            providerId: "credentials"
+                        }
+                    } 
+                }
+            });
             
-            if (!prismaUser) {
+            if (!usuarioPrisma) {
                 return null;
             }
             
-            return new User(
-                prismaUser.id,
-                prismaUser.name,
-                prismaUser.email,
-                prismaUser.role as UserRole,
-                prismaUser.createdAt
+            return new Usuario(
+                usuarioPrisma.id,
+                usuarioPrisma.name,
+                usuarioPrisma.email,
+                usuarioPrisma.role as PapelUsuario,
+                usuarioPrisma.createdAt,
+                usuarioPrisma.accounts[0]?.password ?? undefined
             );
-        } catch (error: any) {
-            throw new Error(error);
+        } catch (erro: any) {
+            throw new Error(`Falha ao buscar usuário por e-mail: ${erro.message}`);
         }
     }
 
-   async save(user: User, passwordHash: string): Promise<void> {
+    async salvar(usuario: Usuario, senhaHash: string): Promise<void> {
         try {
             await prisma.user.create({
                 data: {
-                    id: user.Id,
-                    name: user.name,
-                    email: user.email,
-                    role: user.role as string,
-                    
+                    id: usuario.id,
+                    name: usuario.nome,
+                    email: usuario.email,
+                    role: usuario.papel,
                     accounts: { 
-                        create: [
-                            {
-                                type: "credentials", 
-                                provider: "credentials",
-                                providerAccountId: user.Id
-                            } 
-                        ]
+                        create: {
+                            id: crypto.randomUUID(),
+                            accountId: usuario.id,
+                            providerId: "credentials",
+                            password: senhaHash
+                        } 
                     }
                 }
-            } as any);
-        } catch (error: any) {
-            throw new Error(error);
+            });
+        } catch (erro: any) {
+            throw new Error(`Falha ao salvar usuário: ${erro.message}`);
         }
     }
 
-    async findById(id: string): Promise<User | null> {
+    async buscarPorId(id: string): Promise<Usuario | null> {
         try {
-            // 🔎 A única mudança real é aqui: trocamos "email" por "id"
-            const prismaUser = await prisma.user.findUnique({ where: { id } });
+            const usuarioPrisma = await prisma.user.findUnique({ where: { id } });
             
-            if (!prismaUser) {
+            if (!usuarioPrisma) {
                 return null;
             }
             
-            return new User(
-                prismaUser.id,
-                prismaUser.name,
-                prismaUser.email,
-                prismaUser.role as UserRole,
-                prismaUser.createdAt
+            return new Usuario(
+                usuarioPrisma.id,
+                usuarioPrisma.name,
+                usuarioPrisma.email,
+                usuarioPrisma.role as PapelUsuario,
+                usuarioPrisma.createdAt
             );
-        } catch (error: any) {
-            throw new Error(error);
+        } catch (erro: any) {
+            throw new Error(`Falha ao buscar usuário por ID: ${erro.message}`);
         }
     }
 }

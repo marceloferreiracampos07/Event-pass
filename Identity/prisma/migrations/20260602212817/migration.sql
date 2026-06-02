@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `user` MODIFY `emailVerified` BOOLEAN NOT NULL DEFAULT false,
+    MODIFY `role` VARCHAR(191) NOT NULL DEFAULT 'CUSTOMER';

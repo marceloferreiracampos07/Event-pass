@@ -1,33 +1,33 @@
 import { IPasswordHasher } from "../../Domain/service/IPasswordHasher";
-import { IUserRepository } from "../../Domain/repositories/IUserRepository";
+import { IRepositorioUsuario } from "../../Domain/repositories/IUserRepository";
 import { LoginUserInputDto, LoginUserOutputDto } from "../DTO/LoginUser.dto";
 
 export class LoginUsecase {
     constructor(
-        private useRepository: IUserRepository,
-        private passwordhash: IPasswordHasher,
+        private repositorioUsuario: IRepositorioUsuario,
+        private hasherSenha: IPasswordHasher,
     ) {}
 
-    async execute(input: LoginUserInputDto): Promise<LoginUserOutputDto> {
-        const loginUser = await this.useRepository.findByEmail(input.email);
+    async executar(entrada: LoginUserInputDto): Promise<LoginUserOutputDto> {
+        const usuario = await this.repositorioUsuario.buscarPorEmail(entrada.email);
 
-        if (!loginUser) {
+        if (!usuario) {
             throw new Error("E-mail ou senha incorretos");
         }
 
-        const isPasswordValid = await this.passwordhash.compare(
-            input.password,
-            (loginUser as any).passwordHash || ""
+        const senhaEhValida = await this.hasherSenha.compare(
+            entrada.password,
+            usuario.senha ?? ""
         );
 
-        if (!isPasswordValid) {
+        if (!senhaEhValida) {
             throw new Error("E-mail ou senha incorretos");
         }
 
         return {
-            id: loginUser.Id,
-            name: loginUser.name,
-            email: loginUser.email
+            id: usuario.id,
+            name: usuario.nome,
+            email: usuario.email
         };
     }
 }

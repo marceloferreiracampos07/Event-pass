@@ -1,10 +1,7 @@
-import { User } from "../entities/User";
+import { Usuario } from "../entities/User";
 
-export interface IUserRepository {
-    findByEmail(email: string): Promise<User | null>;
-    
-    
-    save(user: User, passwordHash: string): Promise<void>; 
-    
-    findById(id: string): Promise<User | null>;
+export interface IRepositorioUsuario {
+    buscarPorEmail(email: string): Promise<Usuario | null>;
+    salvar(usuario: Usuario, senhaHash: string): Promise<void>;
+    buscarPorId(id: string): Promise<Usuario | null>;
 }

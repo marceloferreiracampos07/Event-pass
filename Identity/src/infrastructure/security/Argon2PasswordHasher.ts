@@ -7,6 +7,16 @@ export class Argon2PasswordHasher implements IPasswordHasher {
     }
 
     async compare(password: string, hash: string): Promise<boolean> {
-        return await argon2.verify(hash,password)
+        if (!hash || typeof hash !== 'string' || !hash.startsWith('$argon2')) {
+            console.warn(`[Hasher] Hash inválido ou vazio detectado: ${hash ? 'formato incorreto' : 'vazio'}`);
+            return false;
+        }
+        
+        try {
+            return await argon2.verify(hash, password);
+        } catch (erro: any) {
+            console.error(`[Hasher] Erro ao verificar senha: ${erro.message}`);
+            return false;
+        }
     }
 }

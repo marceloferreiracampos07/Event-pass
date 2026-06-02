@@ -1,43 +1,38 @@
-import { User } from "../../Domain/entities/User";
-import { IUserRepository } from "../../Domain/repositories/IUserRepository";
+import { Usuario } from "../../Domain/entities/User";
+import { IRepositorioUsuario } from "../../Domain/repositories/IUserRepository";
 import { IPasswordHasher } from "../../Domain/service/IPasswordHasher";
 import { RegisterUserInputDto, RegisterUserOutputDto } from "../DTO/RegisterUser.dto";
+import crypto from "crypto";
 
 export class RegisterUseCase {
     constructor(
-        private userRepository: IUserRepository,
-        private passwordhash: IPasswordHasher,
+        private repositorioUsuario: IRepositorioUsuario,
+        private hasherSenha: IPasswordHasher,
     ) {}
     
-    async execute(input: RegisterUserInputDto): Promise<RegisterUserOutputDto> {
-        
+    async executar(entrada: RegisterUserInputDto): Promise<RegisterUserOutputDto> {
+        const usuarioExistente = await this.repositorioUsuario.buscarPorEmail(entrada.email);
 
-        const existingUser = await this.userRepository.findByEmail(input.email);
-
-        if (existingUser) {
-            throw new Error("Já existe um usuário com esse email no sistema");
+        if (usuarioExistente) {
+            throw new Error("Já existe um usuário com esse e-mail no sistema");
         }
 
-    
-        const user = new User(
+        const novoUsuario = new Usuario(
             crypto.randomUUID(),
-            input.name,
-            input.email,
-            input.role,
+            entrada.name,
+            entrada.email,
+            entrada.role,
             new Date()
         );
 
-    
-        const hashedpassword = await this.passwordhash.hash(input.password);
+        const senhaHasheada = await this.hasherSenha.hash(entrada.password);
 
-        
-        await this.userRepository.save(user, hashedpassword);
+        await this.repositorioUsuario.salvar(novoUsuario, senhaHasheada);
 
-    
         return {
-            id: user.Id,
-            name: user.name,
-            email: user.email
+            id: novoUsuario.id,
+            name: novoUsuario.nome,
+            email: novoUsuario.email
         };
     }
 }

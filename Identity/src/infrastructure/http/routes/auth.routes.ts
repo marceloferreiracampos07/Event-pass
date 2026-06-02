@@ -17,7 +17,7 @@ const loginUseCase = new LoginUsecase(userRepository, passwordHasher);
 const registerController = new RegisterController(registerUseCase);
 const loginController = new LoginController(loginUseCase);
 
-authRoutes.post("/register", (req, res) => registerController.handle(req, res));
-authRoutes.post("/login", (req, res) => loginController.handle(req, res));
+authRoutes.post("/register", (req, res) => registerController.lidar(req, res));
+authRoutes.post("/login", (req, res) => loginController.lidar(req, res));
 
 export { authRoutes };
