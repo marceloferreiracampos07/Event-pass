@@ -1,0 +1,7 @@
+export interface CriarEventoOutputDto {
+    id: string;
+    nome: string;
+    data: Date;
+    estoqueTotal: number;
+    estoqueDisponivel: number;
+}

@@ -1,0 +1,16 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Evento {
+  id                String   @id
+  nome              String
+  data              DateTime
+  estoqueTotal      Int
+  estoqueDisponivel Int
+}
