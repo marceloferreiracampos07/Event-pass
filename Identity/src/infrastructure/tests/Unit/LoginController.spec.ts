@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, Mocked } from "vitest";
-import { LoginController } from "../../http/controller/LoginController";
+import { LoginController, InvalidCredentialsError } from "../../http/controller/LoginController";
 import { LoginUsecase } from "../../../Usecase/login/LoginUsecase";
 import { Request, Response } from "express";
 
@@ -69,7 +69,6 @@ describe("LoginController", () => {
         req = {
             body: { email: "usuario@teste.com", password: "senhaForte123!" }
         };
-        const { InvalidCredentialsError } = await import("../../http/controller/LoginController");
         loginUseCaseMock.executar.mockRejectedValue(new InvalidCredentialsError());
 
         await sut.lidar(req as Request, res as Response);
