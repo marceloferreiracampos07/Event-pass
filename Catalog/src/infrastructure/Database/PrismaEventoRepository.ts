@@ -58,6 +58,7 @@ export class PrismaEventoRepository implements IrepositorioEvento {
 
     private tratarErro(contexto: string, erro: any): never {
         const mensagem = erro instanceof Error ? erro.message : String(erro);
-        throw new Error(\Falha ao \: \\);
+        throw new Error('Falha ao ' + contexto + ': ' + mensagem);
     }
 }
+
