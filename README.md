@@ -1,61 +1,108 @@
-# 🎟️ EventPass - Sistema de Ingressos
+﻿# 🎫 EventPass - Sistema de Ingressos em Microsserviços
 
-Projeto de back-end para uma plataforma de venda de ingressos baseada em microsserviços.
-
-## 🚀 Stack Tecnológica Obrigatória
-* **Runtime:** Node.js com TypeScript
-* **Infraestrutura:** Docker e Docker Compose
-* **Autenticação:** better-auth
-* **Banco de Dados & ORM:** MySQL com Prisma
-* **Mensageria:** Redis Pub/Sub
-* **Testes:** Vitest (Unitários e de Integração)
-
-## 🏛️ Princípios Arquiteturais Obrigatórios
-* **Clean Architecture:** Separação clara entre Domínio, Casos de Uso e Infraestrutura.
-* **Domain-Driven Design (DDD):** Entidades de domínio ricas e agnósticas de banco de dados.
-* **Event-Driven Architecture (EDA):** Comunicação assíncrona baseada em eventos via Redis.
-* **Microsserviços:** Serviços independentes com responsabilidades únicas e bancos próprios.
-* **Versionamento de API:** Padrão `/api/v1/...`.
+O **EventPass** é uma plataforma robusta de venda de ingressos baseada em uma arquitetura de microsserviços, projetada para ser escalável, resiliente e fácil de manter. O projeto utiliza princípios avançados de design de software como **Clean Architecture** e **DDD (Domain-Driven Design)**.
 
 ---
 
-## 🛠️ Tecnologias por Serviço
+## 🚀 Stack Tecnológica
 
-### Identity Service (Autenticação)
-* **Auth:** better-auth
-* **Segurança:** Argon2 (Hash de senha)
-* **Banco:** MySQL + Prisma
+- **Runtime:** Node.js (v20+) com TypeScript
+- **Framework Web:** Express.js
+- **ORM & Banco de Dados:** Prisma com MySQL
+- **Autenticação:** Better-Auth (Credentials & Security)
+- **Segurança:** Argon2 para hashing de senhas e Helmet para proteção HTTP
+- **Mensageria:** Redis (Pub/Sub) para comunicação assíncrona
+- **Testes:** Vitest (Unitários, Integração e Coverage)
+- **Containerização:** Docker & Docker Compose
 
-### Catalog, Booking & Notification
-* **Banco de Dados:** MySQL / Redis
-* **Comunicação:** HTTP (REST) & Redis Pub/Sub
+---
+
+## 🏗️ Arquitetura e Princípios
+
+O projeto é guiado por padrões que garantem a independência das regras de negócio em relação aos detalhes técnicos:
+
+- **Clean Architecture:** Organizado em camadas (Domain, Usecase, Infrastructure) para garantir que a lógica de negócio não dependa de frameworks ou bancos de dados.
+- **DDD (Domain-Driven Design):** Foco no domínio, utilizando Entidades ricas, Repositórios e DTOs para manter a integridade dos dados.
+- **EDA (Event-Driven Architecture):** Comunicação entre microsserviços via eventos assíncronos, garantindo baixo acoplamento.
+- **Versionamento:** Todas as rotas seguem o padrão \/api/v1/...\.
 
 ---
 
-## 📂 Organização de Pastas
+## 📦 Estrutura de Microsserviços
 
-O projeto segue uma estrutura de microsserviços independente dentro de um monorepo:
+O repositório é um monorepo que orquestra os seguintes serviços:
 
-```text
-projeto-event-pass/
-├── Identity/           # Serviço de Autenticação e Usuários
-│   ├── prisma/         # Schema e Migrations do Banco
-│   └── src/
-│       ├── Domain/     # Entidades e Interfaces (Regras de Negócio)
-│       ├── Usecase/    # Casos de Uso (Fluxos do sistema)
-│       └── infrastructure/ # Implementações (Prisma, Express, Auth)
-├── Catalog/            # Serviço de Gestão de Eventos
-├── Booking/            # Serviço de Motor de Reservas
-├── Notification/       # Serviço de Worker para E-mails
-└── docker-compose.yml  # Orquestração de todos os serviços
-```
+### 🔐 Identity Service
+Responsável pela gestão de usuários, autenticação e autorização.
+- **Features:** Registro de usuários, Login (JWT/Session), Hash de senhas.
+- **Cobertura de Testes:** 100% de cobertura.
 
-## ⚙️ Como Executar (Em breve)
+### 🎭 Catalog Service
+Gerencia o catálogo de eventos, categorias e disponibilidade de locais.
+- **Features:** Criação de eventos, busca por ID, listagem.
 
-1. Certifique-se de ter o **Docker** instalado.
-2. Clone o repositório.
-3. Configure os arquivos `.env` baseados nos `.env.example`.
-4. Execute `docker-compose up --build`.
+### 🎟️ Booking Service
+Motor de reservas que processa as compras de ingressos.
+
+### 📧 Notification Service
+Worker que processa eventos de mensageria para envio de e-mails e alertas.
 
 ---
-*Projeto em desenvolvimento para fins de aprendizado.*
+
+## 🛠️ Como Executar
+
+### Pré-requisitos
+- Docker e Docker Compose instalados.
+- Node.js instalado (para desenvolvimento local).
+
+### Passo a Passo
+1. **Clonar o repositório:**
+   \\\ash
+   git clone https://github.com/marceloferreiracampos07/Event-pass.git
+   cd Event-pass
+   \\\
+
+2. **Subir os Containers:**
+   \\\ash
+   docker-compose up --build
+   \\\
+
+---
+
+## 🧪 Testes e Qualidade
+
+O projeto preza pela alta qualidade de código e confiabilidade.
+
+### Executar Testes (Identity Service como exemplo)
+\\\ash
+cd Identity
+npm install
+npm run test:coverage
+\\\
+
+---
+
+## 📂 Organização de Pastas (Padrão de Serviço)
+
+\\\	ext
+src/
+├── Domain/          # Regras de negócio puras (Entidades e Interfaces)
+├── Usecase/         # Orquestração de fluxos (Casos de Uso e DTOs)
+└── infrastructure/  # Detalhes técnicos (Express, Prisma, Security)
+    ├── http/        # Controllers, Routes e Schemas
+    ├── database/    # Implementação de Repositórios e Config do Prisma
+    └── tests/       # Testes Unitários e de Integração
+\\\
+
+---
+
+## 📝 Roadmap / Status
+- [x] Estrutura Base e Docker Compose
+- [x] Identity Service (Auth & Users) - 100% Coberto
+- [x] Catalog Service (Básico)
+- [ ] Implementação de Redis Pub/Sub para notificações
+- [ ] Booking Service (Fluxo de reserva)
+- [ ] Integração de Gatway de Pagamento (Simulado)
+
+---
+*Desenvolvido para fins de aprendizado de arquitetura escalável.*
