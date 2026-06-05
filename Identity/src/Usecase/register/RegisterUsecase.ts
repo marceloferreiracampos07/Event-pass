@@ -9,7 +9,7 @@ export class RegisterUseCase {
         private repositorioUsuario: IRepositorioUsuario,
         private hasherSenha: IPasswordHasher,
     ) {}
-    
+
     async executar(entrada: RegisterUserInputDto): Promise<RegisterUserOutputDto> {
         const usuarioExistente = await this.repositorioUsuario.buscarPorEmail(entrada.email);
 

@@ -1,5 +1,5 @@
-import { LoginUsecase } from "../../../../Usecase/login/LoginUsecase";
-import { Usuario } from "../../../../Domain/entities/User";
+import { LoginUsecase } from "../../../Usecase/login/LoginUsecase";
+import { Usuario } from "../../../Domain/entities/User";
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 describe("LoginUsecase", () => {
@@ -28,7 +28,7 @@ describe("LoginUsecase", () => {
     };
 
     it("deve realizar login com sucesso quando as credenciais forem válidas", async () => {
-        // Arrange
+
         const usuarioExistente = new Usuario(
             "id-123",
             "Francisco Teste",
@@ -40,10 +40,8 @@ describe("LoginUsecase", () => {
         repositorioUsuarioMock.buscarPorEmail.mockResolvedValue(usuarioExistente);
         hasherSenhaMock.compare.mockResolvedValue(true);
 
-        // Act
         const resultado = await sut.executar(dadosEntrada);
 
-        // Assert
         expect(resultado).toEqual({
             id: "id-123",
             name: "Francisco Teste",
@@ -54,16 +52,15 @@ describe("LoginUsecase", () => {
     });
 
     it("deve lançar erro se o e-mail não for encontrado", async () => {
-        // Arrange
+
         repositorioUsuarioMock.buscarPorEmail.mockResolvedValue(null);
 
-        // Act & Assert
         await expect(sut.executar(dadosEntrada)).rejects.toThrow("E-mail ou senha incorretos");
         expect(hasherSenhaMock.compare).not.toHaveBeenCalled();
     });
 
     it("deve lançar erro se a senha estiver incorreta", async () => {
-        // Arrange
+
         const usuarioExistente = new Usuario(
             "id-123",
             "Francisco Teste",
@@ -75,7 +72,24 @@ describe("LoginUsecase", () => {
         repositorioUsuarioMock.buscarPorEmail.mockResolvedValue(usuarioExistente);
         hasherSenhaMock.compare.mockResolvedValue(false);
 
-        // Act & Assert
         await expect(sut.executar(dadosEntrada)).rejects.toThrow("E-mail ou senha incorretos");
+    });
+
+    it("deve usar uma string vazia se o usuário não tiver senha no banco (Garante 100% Branches)", async () => {
+
+        const usuarioSemSenha = new Usuario(
+            "id-123",
+            "Francisco Teste",
+            dadosEntrada.email,
+            "CUSTOMER" as any,
+            new Date(),
+            undefined
+        );
+        repositorioUsuarioMock.buscarPorEmail.mockResolvedValue(usuarioSemSenha);
+        hasherSenhaMock.compare.mockResolvedValue(false);
+
+        await expect(sut.executar(dadosEntrada)).rejects.toThrow("E-mail ou senha incorretos");
+
+        expect(hasherSenhaMock.compare).toHaveBeenCalledWith(dadosEntrada.password, "");
     });
 });

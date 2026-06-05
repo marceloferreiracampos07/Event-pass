@@ -1,27 +1,29 @@
-import { prisma } from "./prisma"; 
+import { prisma } from "./prisma";
 import { Usuario, PapelUsuario } from "../../Domain/entities/User";
 import { IRepositorioUsuario } from "../../Domain/repositories/IUserRepository";
 import crypto from "crypto";
 
+const PROVIDER_ID = "credentials";
+
 export class PrismaUserRepository implements IRepositorioUsuario {
-    
+
     async buscarPorEmail(email: string): Promise<Usuario | null> {
         try {
-            const usuarioPrisma = await prisma.user.findUnique({ 
+            const usuarioPrisma = await prisma.user.findUnique({
                 where: { email },
-                include: { 
+                include: {
                     accounts: {
                         where: {
-                            providerId: "credentials"
+                            providerId: PROVIDER_ID
                         }
-                    } 
+                    }
                 }
             });
-            
+
             if (!usuarioPrisma) {
                 return null;
             }
-            
+
             return new Usuario(
                 usuarioPrisma.id,
                 usuarioPrisma.name,
@@ -31,7 +33,7 @@ export class PrismaUserRepository implements IRepositorioUsuario {
                 usuarioPrisma.accounts[0]?.password ?? undefined
             );
         } catch (erro: any) {
-            throw new Error(`Falha ao buscar usuário por e-mail: ${erro.message}`);
+            this.tratarErro("buscar usuário por e-mail", erro);
         }
     }
 
@@ -43,29 +45,29 @@ export class PrismaUserRepository implements IRepositorioUsuario {
                     name: usuario.nome,
                     email: usuario.email,
                     role: usuario.papel,
-                    accounts: { 
+                    accounts: {
                         create: {
                             id: crypto.randomUUID(),
                             accountId: usuario.id,
-                            providerId: "credentials",
+                            providerId: PROVIDER_ID,
                             password: senhaHash
-                        } 
+                        }
                     }
                 }
             });
         } catch (erro: any) {
-            throw new Error(`Falha ao salvar usuário: ${erro.message}`);
+            this.tratarErro("salvar usuário", erro);
         }
     }
 
     async buscarPorId(id: string): Promise<Usuario | null> {
         try {
             const usuarioPrisma = await prisma.user.findUnique({ where: { id } });
-            
+
             if (!usuarioPrisma) {
                 return null;
             }
-            
+
             return new Usuario(
                 usuarioPrisma.id,
                 usuarioPrisma.name,
@@ -74,7 +76,12 @@ export class PrismaUserRepository implements IRepositorioUsuario {
                 usuarioPrisma.createdAt
             );
         } catch (erro: any) {
-            throw new Error(`Falha ao buscar usuário por ID: ${erro.message}`);
+            this.tratarErro("buscar usuário por ID", erro);
         }
+    }
+
+    private tratarErro(contexto: string, erro: any): never {
+        const mensagem = erro instanceof Error ? erro.message : String(erro);
+        throw new Error(`Falha ao ${contexto}: ${mensagem}`);
     }
 }

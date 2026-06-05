@@ -1,13 +1,13 @@
-import { RegisterUseCase } from "../../../../Usecase/register/RegisterUsecase";
-import { IRepositorioUsuario } from "../../../../Domain/repositories/IUserRepository";
-import { IPasswordHasher } from "../../../../Domain/service/IPasswordHasher";
-import { Usuario } from "../../../../Domain/entities/User";
+import { RegisterUseCase } from "../../../Usecase/register/RegisterUsecase";
+import { IRepositorioUsuario } from "../../../Domain/repositories/IUserRepository";
+import { IPasswordHasher } from "../../../Domain/service/IPasswordHasher";
+import { Usuario } from "../../../Domain/entities/User";
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 describe("RegisterUseCase", () => {
     let repositorioUsuarioMock: any;
     let hasherSenhaMock: any;
-    let sut: RegisterUseCase; 
+    let sut: RegisterUseCase;
 
     beforeEach(() => {
         repositorioUsuarioMock = {
