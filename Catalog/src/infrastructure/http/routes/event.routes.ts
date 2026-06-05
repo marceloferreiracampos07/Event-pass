@@ -1,4 +1,4 @@
-import { Router } from 'express';
+﻿import { Router } from 'express';
 import { CriarEventoController } from '../controllers/CriarEventoController';
 import { ListarEventosController } from '../controllers/ListarEventosController';
 import { BuscarEventoPorIdController } from '../controllers/BuscarEventoPorIdController';

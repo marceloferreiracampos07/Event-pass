@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+﻿import { describe, it, expect, vi, beforeEach } from "vitest";
 import { BuscarEventoPorIdUseCase } from "../../../Usecases/buscar/BuscarEventoPorIdUseCase";
 import { IrepositorioEvento } from "../../../Domain/repositories/IRepositorioEvento";
 import { Evento } from "../../../Domain/entities/Evento";
 
-describe("BuscarEventoPorIdUseCase (Testes Unitários)", () => {
+describe("BuscarEventoPorIdUseCase (Testes UnitÃ¡rios)", () => {
     let repositorioMock: IrepositorioEvento;
     let sut: BuscarEventoPorIdUseCase;
 
@@ -17,7 +17,7 @@ describe("BuscarEventoPorIdUseCase (Testes Unitários)", () => {
     });
 
     it("deve retornar os dados formatados do evento quando o ID existir", async () => {
-        // Arrange
+        
         const ID_VALIDO_CADASTRADO = "evento-uuid-valido";
         const dataAmanha = new Date();
         dataAmanha.setDate(dataAmanha.getDate() + 1);
@@ -32,10 +32,10 @@ describe("BuscarEventoPorIdUseCase (Testes Unitários)", () => {
 
         vi.spyOn(repositorioMock, "buscarPorId").mockResolvedValue(eventoExistenteNoBanco);
 
-        // Act
+        
         const eventoMapeado = await sut.execute({ id: ID_VALIDO_CADASTRADO });
 
-        // Assert
+        
         expect(eventoMapeado).not.toBeNull();
         expect(eventoMapeado?.id).toBe(ID_VALIDO_CADASTRADO);
         expect(eventoMapeado?.nome).toBe(eventoExistenteNoBanco.nome);
@@ -43,8 +43,8 @@ describe("BuscarEventoPorIdUseCase (Testes Unitários)", () => {
         expect(repositorioMock.buscarPorId).toHaveBeenCalledTimes(1);
     });
 
-    it("deve disparar uma exceção se o evento não for localizado no repositório", async () => {
-        // Arrange
+    it("deve disparar uma exceÃ§Ã£o se o evento nÃ£o for localizado no repositÃ³rio", async () => {
+        
         const ID_INEXISTENTE = "id-nao-cadastrado";
         
         vi.spyOn(repositorioMock, "buscarPorId").mockResolvedValue(null);
@@ -52,7 +52,7 @@ describe("BuscarEventoPorIdUseCase (Testes Unitários)", () => {
         
         await expect(sut.execute({ id: ID_INEXISTENTE }))
             .rejects
-            .toThrow("Evento não encontrado");
+            .toThrow("Evento nÃ£o encontrado");
 
         expect(repositorioMock.buscarPorId).toHaveBeenCalledWith(ID_INEXISTENTE);
     });

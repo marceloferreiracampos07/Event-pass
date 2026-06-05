@@ -1,4 +1,4 @@
-import { Evento } from "../../Domain/entities/Evento";
+﻿import { Evento } from "../../Domain/entities/Evento";
 import { IrepositorioEvento } from "../../Domain/repositories/IRepositorioEvento";
 import crypto from "crypto";
 import { CriarEventoInputDto } from "../dto/CriarEventoInput.dto";
@@ -8,13 +8,13 @@ export class CriarEventoUseCase {
     constructor(
         private repositorioevento: IrepositorioEvento
     ) {}
-    async executar(entrada: CriarEventoInputDto): Promise<CriarEventoOutputDto> {
+    async execute(entrada: CriarEventoInputDto): Promise<CriarEventoOutputDto> {
         const dataDoEvento = new Date(entrada.data);
         const agora = new Date();
 
         
         if (dataDoEvento.getTime() < agora.getTime()) {
-            throw new Error("Não é possível criar um evento com uma data no passado");
+            throw new Error("NÃ£o Ã© possÃ­vel criar um evento com uma data no passado");
         }
 
         const novoEvento = new Evento(

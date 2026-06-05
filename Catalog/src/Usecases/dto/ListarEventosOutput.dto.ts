@@ -1,4 +1,4 @@
-
+﻿
 export interface ListarEventosOutputDto {
     id: string;
     nome: string;

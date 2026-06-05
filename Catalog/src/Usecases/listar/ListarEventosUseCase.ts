@@ -1,4 +1,4 @@
-import { IrepositorioEvento } from "../../Domain/repositories/IRepositorioEvento";
+﻿import { IrepositorioEvento } from "../../Domain/repositories/IRepositorioEvento";
 import { ListarEventosOutputDto } from "../dto/ListarEventosOutput.dto";
 import { BuscarEventoPorIdInputDto } from "../dto/BuscarEventoPorIdInputDto";
 import { BuscarEventoPorIdOutputDto } from "../dto/BuscarEventoPorIdOutputDto";
@@ -28,7 +28,7 @@ export class ListarEventosUseCase {
 
         
         if (!evento) {
-            throw new Error("Evento não encontrado");
+            throw new Error("Evento nÃ£o encontrado");
         }
 
         

@@ -1,4 +1,4 @@
-export interface CriarEventoOutputDto {
+﻿export interface CriarEventoOutputDto {
     id: string;
     nome: string;
     data: Date;

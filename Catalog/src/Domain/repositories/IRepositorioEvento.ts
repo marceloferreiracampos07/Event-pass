@@ -1,4 +1,4 @@
-import { Evento } from "../entities/Evento";
+﻿import { Evento } from "../entities/Evento";
 
 export interface IrepositorioEvento {
     salvar(evento: Evento): Promise<void>;

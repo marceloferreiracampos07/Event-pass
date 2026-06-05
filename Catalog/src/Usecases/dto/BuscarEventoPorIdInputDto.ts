@@ -1,3 +1,3 @@
-export interface BuscarEventoPorIdInputDto {
+﻿export interface BuscarEventoPorIdInputDto {
     id: string; 
 }

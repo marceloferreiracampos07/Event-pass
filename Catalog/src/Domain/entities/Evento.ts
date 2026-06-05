@@ -1,4 +1,4 @@
-export class Evento {
+﻿export class Evento {
     constructor(
         public readonly id: string,
         public nome: string,
@@ -16,19 +16,19 @@ export class Evento {
         }
 
         if (this.estoqueTotal < 0) {
-            throw new Error("O estoque total do evento não pode ser negativo");
+            throw new Error("O estoque total do evento nÃ£o pode ser negativo");
         }
 
         if (this.estoqueDisponivel < 0) {
-            throw new Error("O estoque disponível do evento não pode ser negativo");
+            throw new Error("O estoque disponÃ­vel do evento nÃ£o pode ser negativo");
         }
 
         if (this.estoqueDisponivel > this.estoqueTotal) {
-            throw new Error("O estoque disponível não pode ser maior que o estoque total");
+            throw new Error("O estoque disponÃ­vel nÃ£o pode ser maior que o estoque total");
         }
     }
 
-    // Regra de Negócio Futura: Venda de ingressos
+    
     public baixarEstoque(quantidade: number): void {
         if (quantidade <= 0) {
             throw new Error("A quantidade a ser baixada deve ser maior que zero");

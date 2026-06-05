@@ -1,4 +1,4 @@
-export interface BuscarEventoPorIdOutputDto {
+﻿export interface BuscarEventoPorIdOutputDto {
     id: string;
     nome: string;
     data: Date;

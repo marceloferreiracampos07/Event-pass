@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+﻿import { Request, Response } from 'express';
 import { CriarEventoUseCase } from '../../../Usecases/criar/CriarEventoUseCase';
 import { PrismaEventoRepository } from '../../../infrastructure/Database/PrismaEventoRepository';
 

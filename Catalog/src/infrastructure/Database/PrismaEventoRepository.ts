@@ -1,4 +1,4 @@
-import { IrepositorioEvento } from "../../Domain/repositories/IRepositorioEvento";
+﻿import { IrepositorioEvento } from "../../Domain/repositories/IRepositorioEvento";
 import { Evento } from "../../Domain/entities/Evento";
 import { prisma } from "./prismaClient";
 
