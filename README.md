@@ -18,7 +18,6 @@
 
 <p align="center">
   <img src="https://img.shields.io/github/license/marceloferreiracampos07/Event-pass?style=flat-square" />
-  <img src="https://img.shields.io/github/issues/marceloferreiracampos07/Event-pass?style=flat-square" />
   <img src="https://img.shields.io/badge/Coverage-100%25-brightgreen?style=flat-square" />
   <img src="https://img.shields.io/badge/Architecture-Clean_Arch-blue?style=flat-square" />
 </p>
@@ -89,6 +88,7 @@ Services communicate asynchronously via **Redis Pub/Sub**, ensuring that a failu
 \\\ash
 # 1. Clone the repo
 git clone https://github.com/marceloferreiracampos07/Event-pass.git
+cd Event-pass
 
 # 2. Start the entire ecosystem
 docker-compose up --build
@@ -102,10 +102,10 @@ Quality is a non-negotiable pillar of this project.
 
 - **Unit Testing:** Validating business rules in isolation.
 - **Integration Testing:** Ensuring database and HTTP layers work together.
-- **Coverage:** We aim for 100% in critical services.
+- **Coverage:** We have achieved **100% coverage** in critical services (Identity & Catalog).
 
 \\\ash
-# Run tests with detailed coverage report
+# Example: Run tests for a specific service
 cd Identity
 npm run test:coverage
 \\\
@@ -115,7 +115,7 @@ npm run test:coverage
 ## 📂 Microservices Overview
 
 - **Identity Service:** Auth, Users, Roles. (Status: 🟢 Production Ready)
-- **Catalog Service:** Events, Categories, Search. (Status: 🟡 In Progress)
+- **Catalog Service:** Events, Categories, Search. (Status: 🟢 Production Ready)
 - **Booking Service:** Orders, Payments, Inventory. (Status: 🔴 Planned)
 - **Notification Service:** Email worker. (Status: 🔴 Planned)
 
