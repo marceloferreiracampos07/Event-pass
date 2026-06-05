@@ -24,35 +24,46 @@
 
 ---
 
-## 📋 Project Summary (Latest Updates)
-<details>
-<summary>Click to view today's activities report</summary>
+## 📖 Table of Contents
+- [About the Project](#-about-the-project)
+- [Key Features](#-key-features)
+- [System Architecture](#-system-architecture)
+- [SOLID Principles](#-solid-principles-applied)
+- [Tech Stack](#-tech-stack)
+- [Getting Started](#-getting-started)
+- [Testing & Quality](#-testing--quality)
+- [Microservices Overview](#-microservices-overview)
+- [Project Summary](#-project-summary-latest-updates)
 
-### 📊 Relatório de Atividades - EventPass
+---
 
-#### 1. Diagnóstico e Infraestrutura
-- **Análise de Cobertura:** Identificação de lacunas em testes unitários.
-- **Configuração de Testes:** Padronização do 
-pm run test:coverage para medições precisas.
-- **Git Hygiene:** Otimização do .gitignore para ignorar artefatos de cobertura.
+## 🌟 About the Project
+EventPass is a modern solution for high-traffic event management. It tackles complex problems like race conditions in ticket sales, high availability of catalog data, and reliable asynchronous notifications using a distributed system approach.
 
-#### 2. Identity Service (Finalizado)
-- **Refatoração:** Clean Code, padronização de tratamento de erros e segurança.
-- **Cobertura:** **100% de cobertura** (Statements, Branches, Functions, Lines).
-- **Segurança:** Refatoração de Argon2 e LoginController para proteção contra vazamento de dados.
+---
 
-#### 3. Catalog Service (Finalizado)
-- **Refatoração:** Injeção de dependência em todos os controllers e padronização do método .execute().
-- **Segurança:** Implementação de helmet e ate-limit.
-- **Cobertura:** **100% de cobertura** (Unit tests).
-- **Correções:** Fix de *encoding* e interpolação de strings em erros.
+## ✨ Key Features
 
-#### 🚀 Status Final
-| Serviço | Cobertura | Status |
-| :--- | :--- | :--- |
-| **Identity** | 100% | 🟢 Production Ready |
-| **Catalog** | 100% | 🟢 Production Ready |
-</details>
+- 🔐 **Identity Management:** Secure authentication using Argon2 and Better-Auth.
+- 🎟️ **Real-time Catalog:** High-performance event listing and categorization.
+- 💳 **Resilient Bookings:** Distributed transactions and inventory control.
+- 📧 **Event-Driven Notifications:** Asynchronous delivery via Redis Pub/Sub.
+- 🐳 **Full Orchestration:** Single-command setup with Docker Compose.
+
+---
+
+## 🏗️ System Architecture
+
+### 💎 Clean Architecture
+The codebase is structured to be **framework-independent**. The business logic (Entities & Use Cases) is isolated from external tools like Express or Prisma.
+
+### 🧩 Domain-Driven Design (DDD)
+- **Rich Domain Models:** Business rules live inside the entities.
+- **Repository Pattern:** Abstracting data access for flexibility.
+- **DTOs:** Clear data contracts between layers.
+
+### 📡 Event-Driven Communication
+Services communicate asynchronously via **Redis Pub/Sub**, ensuring that a failure in one service (like Notifications) doesn't crash the entire checkout flow.
 
 ---
 
@@ -60,37 +71,83 @@ pm run test:coverage para medições precisas.
 
 The EventPass ecosystem strictly follows SOLID principles to ensure long-term maintainability:
 
-- **S - Single Responsibility Principle (SRP):** Each class, controller, and use case has one, and only one, reason to change. For example, Controllers only handle HTTP requests, while Use Cases handle business logic.
-- **O - Open/Closed Principle (OCP):** The system is open for extension but closed for modification. New repository implementations can be added (e.g., changing from Prisma to another ORM) without modifying the Use Cases.
-- **L - Liskov Substitution Principle (LSP):** Subtypes can be substituted for their base types (e.g., any IUserRepository implementation works seamlessly with the LoginUseCase).
-- **I - Interface Segregation Principle (ISP):** Small, specific interfaces (e.g., IRepositorioEvento, IPasswordHasher) are preferred over large, monolithic ones.
-- **D - Dependency Inversion Principle (DIP):** High-level modules (Use Cases) do not depend on low-level modules (Prisma/Infrastructure). Both depend on abstractions (Interfaces). **Injection of Dependency** is heavily used across all controllers and use cases.
-
----
-
-## 🏗️ System Architecture
-- **Clean Architecture:** Independent layers (Domain, Usecase, Infrastructure).
-- **Domain-Driven Design (DDD):** Domain models are the heart of the application.
-- **Event-Driven Architecture (EDA):** Asynchronous communication via Redis Pub/Sub.
+- **S - Single Responsibility Principle (SRP):** Each class, controller, and use case has one, and only one, reason to change.
+- **O - Open/Closed Principle (OCP):** The system is open for extension but closed for modification.
+- **L - Liskov Substitution Principle (LSP):** Subtypes can be substituted for their base types seamlessly.
+- **I - Interface Segregation Principle (ISP):** Small, specific interfaces are preferred over large, monolithic ones.
+- **D - Dependency Inversion Principle (DIP):** High-level modules do not depend on low-level modules. Injection of Dependency is heavily used.
 
 ---
 
 ## 🛠️ Tech Stack
+
 | Category | Technology |
 | :--- | :--- |
 | **Languages** | TypeScript, Node.js |
 | **Database** | MySQL, Redis |
 | **ORM** | Prisma |
+| **Security** | Argon2, Helmet, Express-Rate-Limit |
 | **Testing** | Vitest, Supertest, V8 Coverage |
+| **DevOps** | Docker, Docker Compose |
 
 ---
 
 ## 🚦 Getting Started
+
+### Prerequisites
+- Docker & Docker Compose
+- Node.js 20+
+
+### Quick Start
 \\\ash
 git clone https://github.com/marceloferreiracampos07/Event-pass.git
 cd Event-pass
 docker-compose up --build
 \\\
+
+---
+
+## 🧪 Testing & Quality
+
+- **Coverage:** We have achieved **100% coverage** in critical services (Identity & Catalog).
+\\\ash
+cd Identity
+npm run test:coverage
+\\\
+
+---
+
+## 📂 Microservices Overview
+
+- **Identity Service:** Auth, Users, Roles. (Status: 🟢 Production Ready)
+- **Catalog Service:** Events, Categories, Search. (Status: 🟢 Production Ready)
+- **Booking Service:** Orders, Payments, Inventory. (Status: 🔴 Planned)
+- **Notification Service:** Email worker. (Status: 🔴 Planned)
+
+---
+
+## 📋 Project Summary (Latest Updates)
+<details>
+<summary>Click to view today's activities report</summary>
+
+### 📊 Relatório de Atividades - EventPass
+
+#### 1. Diagnóstico e Infraestrutura
+- Análise de Cobertura e padronização do 
+pm run test:coverage.
+
+#### 2. Identity Service (Finalizado)
+- Refatoração, 100% cobertura, segurança (Argon2, Helmet).
+
+#### 3. Catalog Service (Finalizado)
+- Injeção de dependência, segurança, 100% cobertura, refatoração de erros.
+
+#### 🚀 Status Final
+| Serviço | Cobertura | Status |
+| :--- | :--- | :--- |
+| **Identity** | 100% | 🟢 Production Ready |
+| **Catalog** | 100% | 🟢 Production Ready |
+</details>
 
 ---
 <p align="center">
