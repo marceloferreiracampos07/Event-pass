@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1780620710027" clover="3.2.0">
+  <project timestamp="1780620710027" name="All files">
+    <metrics statements="32" coveredstatements="32" conditionals="18" coveredconditionals="18" methods="7" coveredmethods="7" elements="57" coveredelements="57" complexity="0" loc="32" ncloc="32" packages="3" files="3" classes="3"/>
+    <package name="Domain.entities">
+      <metrics statements="19" coveredstatements="19" conditionals="14" coveredconditionals="14" methods="3" coveredmethods="3"/>
+      <file name="Evento.ts" path="C:\Users\JR\pep\projeto event pass\Catalog\src\Domain\entities\Evento.ts">
+        <metrics statements="19" coveredstatements="19" conditionals="14" coveredconditionals="14" methods="3" coveredmethods="3"/>
+        <line num="3" count="12" type="stmt"/>
+        <line num="4" count="12" type="stmt"/>
+        <line num="5" count="12" type="stmt"/>
+        <line num="6" count="12" type="stmt"/>
+        <line num="7" count="12" type="stmt"/>
+        <line num="10" count="12" type="stmt"/>
+        <line num="14" count="12" type="cond" truecount="4" falsecount="0"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="18" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="22" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="26" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="33" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="37" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="Usecases.buscar">
+      <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+      <file name="BuscarEventoPorIdUseCase.ts" path="C:\Users\JR\pep\projeto event pass\Catalog\src\Usecases\buscar\BuscarEventoPorIdUseCase.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="Usecases.criar">
+      <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+      <file name="CriarEventoUseCase.ts" path="C:\Users\JR\pep\projeto event pass\Catalog\src\Usecases\criar\CriarEventoUseCase.ts">
+        <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="16" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
