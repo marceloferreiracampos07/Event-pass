@@ -8,7 +8,9 @@ export class BuscarEventoPorIdUseCase {
 
     async execute(input: BuscarEventoPorIdInputDto): Promise<BuscarEventoPorIdOutputDto | null> {
         const evento = await this.repositorio.buscarPorId(input.id);
-        if (!evento) return null;
+        if (!evento){
+            throw new Error("Evento não encontrado");
+        };
         return {
             id: evento.id,
             nome: evento.nome,
