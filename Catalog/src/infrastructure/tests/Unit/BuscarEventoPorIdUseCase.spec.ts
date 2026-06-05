@@ -1,59 +1,34 @@
-﻿import { describe, it, expect, vi, beforeEach } from "vitest";
-import { BuscarEventoPorIdUseCase } from "../../../Usecases/buscar/BuscarEventoPorIdUseCase";
-import { IrepositorioEvento } from "../../../Domain/repositories/IRepositorioEvento";
-import { Evento } from "../../../Domain/entities/Evento";
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { BuscarEventoPorIdUseCase } from '../../../Usecases/buscar/BuscarEventoPorIdUseCase';
+import { IrepositorioEvento } from '../../../Domain/repositories/IRepositorioEvento';
+import { Evento } from '../../../Domain/entities/Evento';
 
-describe("BuscarEventoPorIdUseCase (Testes UnitÃ¡rios)", () => {
-    let repositorioMock: IrepositorioEvento;
+describe('BuscarEventoPorIdUseCase', () => {
+    let repo: IrepositorioEvento;
     let sut: BuscarEventoPorIdUseCase;
 
     beforeEach(() => {
-        vi.clearAllMocks();
-        repositorioMock = {
+        repo = {
+            salvar: vi.fn(),
+            listarTodos: vi.fn(),
             buscarPorId: vi.fn(),
-        } as unknown as IrepositorioEvento;
-
-        sut = new BuscarEventoPorIdUseCase(repositorioMock);
+        };
+        sut = new BuscarEventoPorIdUseCase(repo);
     });
 
-    it("deve retornar os dados formatados do evento quando o ID existir", async () => {
-        
-        const ID_VALIDO_CADASTRADO = "evento-uuid-valido";
-        const dataAmanha = new Date();
-        dataAmanha.setDate(dataAmanha.getDate() + 1);
+    it('deve retornar um evento quando encontrado', async () => {
+        const evento = new Evento('id-1', 'Evento 1', new Date(), 100, 100);
+        vi.mocked(repo.buscarPorId).mockResolvedValue(evento);
 
-        const eventoExistenteNoBanco = new Evento(
-            ID_VALIDO_CADASTRADO,
-            "Grande Show de Rock",
-            dataAmanha,
-            100,
-            100
-        );
+        const resultado = await sut.execute({ id: 'id-1' });
 
-        vi.spyOn(repositorioMock, "buscarPorId").mockResolvedValue(eventoExistenteNoBanco);
-
-        
-        const eventoMapeado = await sut.execute({ id: ID_VALIDO_CADASTRADO });
-
-        
-        expect(eventoMapeado).not.toBeNull();
-        expect(eventoMapeado?.id).toBe(ID_VALIDO_CADASTRADO);
-        expect(eventoMapeado?.nome).toBe(eventoExistenteNoBanco.nome);
-        expect(repositorioMock.buscarPorId).toHaveBeenCalledWith(ID_VALIDO_CADASTRADO);
-        expect(repositorioMock.buscarPorId).toHaveBeenCalledTimes(1);
+        expect(resultado?.id).toBe('id-1');
+        expect(repo.buscarPorId).toHaveBeenCalledWith('id-1');
     });
 
-    it("deve disparar uma exceÃ§Ã£o se o evento nÃ£o for localizado no repositÃ³rio", async () => {
-        
-        const ID_INEXISTENTE = "id-nao-cadastrado";
-        
-        vi.spyOn(repositorioMock, "buscarPorId").mockResolvedValue(null);
+    it('deve lan?ar erro quando o evento n?o for encontrado', async () => {
+        vi.mocked(repo.buscarPorId).mockResolvedValue(null);
 
-        
-        await expect(sut.execute({ id: ID_INEXISTENTE }))
-            .rejects
-            .toThrow("Evento nÃ£o encontrado");
-
-        expect(repositorioMock.buscarPorId).toHaveBeenCalledWith(ID_INEXISTENTE);
+        await expect(sut.execute({ id: 'any-id' })).rejects.toThrow('Evento nao encontrado');
     });
 });

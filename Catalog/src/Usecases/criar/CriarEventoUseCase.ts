@@ -1,4 +1,4 @@
-﻿import { Evento } from "../../Domain/entities/Evento";
+import { Evento } from "../../Domain/entities/Evento";
 import { IrepositorioEvento } from "../../Domain/repositories/IRepositorioEvento";
 import crypto from "crypto";
 import { CriarEventoInputDto } from "../dto/CriarEventoInput.dto";
@@ -12,17 +12,17 @@ export class CriarEventoUseCase {
         const dataDoEvento = new Date(entrada.data);
         const agora = new Date();
 
-        
+
         if (dataDoEvento.getTime() < agora.getTime()) {
-            throw new Error("NÃ£o Ã© possÃ­vel criar um evento com uma data no passado");
+            throw new Error("Data invalida");
         }
 
         const novoEvento = new Evento(
-            crypto.randomUUID(), 
+            crypto.randomUUID(),
             entrada.nome,
             dataDoEvento,
             entrada.estoqueTotal,
-            entrada.estoqueTotal 
+            entrada.estoqueTotal
         );
         await this.repositorioevento.salvar(novoEvento);
         return {

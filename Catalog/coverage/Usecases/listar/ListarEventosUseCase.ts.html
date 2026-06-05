@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for Usecases/buscar/BuscarEventoPorIdUseCase.ts</title>
+    <title>Code coverage report for Usecases/listar/ListarEventosUseCase.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">Usecases/buscar</a> BuscarEventoPorIdUseCase.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">Usecases/listar</a> ListarEventosUseCase.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
@@ -83,10 +83,7 @@
 <a name='L18'></a><a href='#L18'>18</a>
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
-<a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L21'></a><a href='#L21'>21</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -94,11 +91,10 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -108,25 +104,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IrepositorioEvento } from "../../Domain/repositories/IRepositorioEvento";
-import { BuscarEventoPorIdInputDto } from "../dto/BuscarEventoPorIdInputDto";
-import { BuscarEventoPorIdOutputDto } from "../dto/BuscarEventoPorIdOutputDto";
-import { Evento } from "../../Domain/entities/Evento";
+import { ListarEventosOutputDto } from "../dto/ListarEventosOutput.dto";
 &nbsp;
-export class BuscarEventoPorIdUseCase {
-    constructor(private readonly repositorio: IrepositorioEvento) {}
+export class ListarEventosUseCase {
+    constructor(
+        private repositorioevento: IrepositorioEvento
+    ) {}
 &nbsp;
-    async execute(input: BuscarEventoPorIdInputDto): Promise&lt;BuscarEventoPorIdOutputDto | null&gt; {
-        const evento = await this.repositorio.buscarPorId(input.id);
-        if (!evento){
-            throw new Error("Evento nao encontrado");
-        };
-        return {
+    async execute(): Promise&lt;ListarEventosOutputDto[]&gt; {
+        const eventosDoBanco = await this.repositorioevento.listarTodos();
+&nbsp;
+        return eventosDoBanco.map(evento =&gt; ({
             id: evento.id,
             nome: evento.nome,
             data: evento.data,
             estoqueTotal: evento.estoqueTotal,
             estoqueDisponivel: evento.estoqueDisponivel
-        };
+        }));
     }
 }
 &nbsp;</pre></td></tr></table></pre>

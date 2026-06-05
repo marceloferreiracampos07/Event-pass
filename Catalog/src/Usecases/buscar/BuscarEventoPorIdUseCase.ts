@@ -1,4 +1,4 @@
-﻿import { IrepositorioEvento } from "../../Domain/repositories/IRepositorioEvento";
+import { IrepositorioEvento } from "../../Domain/repositories/IRepositorioEvento";
 import { BuscarEventoPorIdInputDto } from "../dto/BuscarEventoPorIdInputDto";
 import { BuscarEventoPorIdOutputDto } from "../dto/BuscarEventoPorIdOutputDto";
 import { Evento } from "../../Domain/entities/Evento";
@@ -9,7 +9,7 @@ export class BuscarEventoPorIdUseCase {
     async execute(input: BuscarEventoPorIdInputDto): Promise<BuscarEventoPorIdOutputDto | null> {
         const evento = await this.repositorio.buscarPorId(input.id);
         if (!evento){
-            throw new Error("Evento nÃ£o encontrado");
+            throw new Error("Evento nao encontrado");
         };
         return {
             id: evento.id,
