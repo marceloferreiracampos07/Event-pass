@@ -10,9 +10,10 @@ O **Identity Service** é o núcleo de autenticação e gestão de usuários do 
 - **Autenticação Segura:** Login com verificação de credenciais e integração com sessões.
 - **Gestão de Roles:** Sistema de permissões diferenciado entre `ADMIN` e `CUSTOMER`.
 - **Segurança Avançada:**
-  - Hashing de senhas com **Argon2** (resistente a ataques de força bruta).
+  - Hashing de senhas com **Argon2**.
   - Proteção HTTP com **Helmet**.
-  - **Rate Limiting** para prevenção de ataques de negação de serviço e brute force.
+  - **Rate Limiting** para prevenção de ataques.
+- **Tratamento de Erros Centralizado:** Handler de exceções global para Express 5, garantindo respostas padronizadas e controllers limpos (sem try/catch).
 
 ---
 
@@ -20,38 +21,38 @@ O **Identity Service** é o núcleo de autenticação e gestão de usuários do 
 
 O serviço é dividido em camadas independentes para garantir que a lógica de negócio seja protegida de mudanças externas:
 
-1.  **Domain:** Entidades (`User`) e interfaces de contrato (`IUserRepository`). É o coração do sistema, sem dependências externas.
-2.  **Usecase:** Implementa os fluxos da aplicação (`LoginUsecase`, `RegisterUsecase`).
+1.  **Domain:** Entidades (`User`, `Evento`) e interfaces de contrato (`IRepository`).
+2.  **Usecase:** Implementa os fluxos da aplicação (`LoginUsecase`, `RegisterUsecase`, `CriarEventoUseCase`).
 3.  **Infrastructure:** Detalhes de implementação técnica:
     *   `database`: Implementação Prisma e Repositórios.
-    *   `http`: Servidor Express, Controllers, Routes e Schemas de validação.
-    *   `security`: Implementação de Hashing e Segurança.
+    *   `http`: Servidor Express 5, Controllers limpos, Rotas e Middlewares (incluindo `errorHandler`).
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
 - **Runtime:** Node.js + TypeScript
-- **Web Framework:** Express 5
+- **Web Framework:** Express 5 (Async nativo)
 - **ORM:** Prisma
 - **Database:** MySQL
 - **Validação:** Zod
-- **Autenticação:** Better-Auth
-- **Testes:** Vitest & Supertest
+- **Testes:** Vitest & Supertest (com Docker isolado)
 
 ---
 
 ## 🧪 Testes e Qualidade de Código
 
-Este serviço orgulha-se de possuir **100% de cobertura de código** em todos os fluxos críticos.
+### Ambiente de Testes Docker
+Utilizamos containers Docker isolados para testes de integração, garantindo que o banco de dados de desenvolvimento não seja alterado.
+- Configure o `.env.test` com as credenciais do container.
+- Utilize o comando `npm run test:integration` para rodar os testes em ambiente isolado.
 
 ### Comandos de Teste
 
 | Comando | Descrição |
 | :--- | :--- |
-| `npm run test` | Executa todos os testes unitários e de integração uma vez. |
-| `npm run test:prepare` | Prepara o banco de dados de teste (Prisma Push). |
-| `npm run test:coverage` | Gera o relatório de cobertura completo (Vitest + V8). |
+| `npm run test` | Executa todos os testes unitários. |
+| `npm run test:integration` | Executa testes de integração com Docker isolado. |
 
 ---
 
@@ -59,14 +60,14 @@ Este serviço orgulha-se de possuir **100% de cobertura de código** em todos os
 
 ### Pré-requisitos
 - Node.js v20+
-- Instância de MySQL (local ou Docker)
+- Docker (para testes de integração)
 
 ### Instalação
 1. Instale as dependências:
    ```bash
    npm install
    ```
-2. Configure seu arquivo `.env` (use o `.env.test` como referência para testes).
+2. Configure seu arquivo `.env` (Use o `.env.test` como base).
 3. Gere o cliente do Prisma:
    ```bash
    npx prisma generate

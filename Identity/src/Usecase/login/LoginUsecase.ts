@@ -1,6 +1,7 @@
 import { IPasswordHasher } from "../../Domain/service/IPasswordHasher";
 import { IRepositorioUsuario } from "../../Domain/repositories/IUserRepository";
 import { LoginUserInputDto, LoginUserOutputDto } from "../DTO/LoginUser.dto";
+import { CredenciaisInvalidasError } from "../../Domain/errors/DomainError";
 
 export class LoginUsecase {
     constructor(
@@ -12,7 +13,7 @@ export class LoginUsecase {
         const usuario = await this.repositorioUsuario.buscarPorEmail(entrada.email);
 
         if (!usuario) {
-            throw new Error("E-mail ou senha incorretos");
+            throw new CredenciaisInvalidasError();
         }
 
         const senhaEhValida = await this.hasherSenha.compare(
@@ -21,7 +22,7 @@ export class LoginUsecase {
         );
 
         if (!senhaEhValida) {
-            throw new Error("E-mail ou senha incorretos");
+            throw new CredenciaisInvalidasError();
         }
 
         return {

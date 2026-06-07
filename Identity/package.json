@@ -6,14 +6,15 @@
     "dev": "prisma generate && tsx watch src/infrastructure/http/server.ts",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "test:prepare": "npx dotenv -e .env.test -- prisma db push --accept-data-loss"
+    "test:prepare": "npx dotenv -e .env.test -- prisma db push --accept-data-loss",
+    "test:integration": "npx dotenv -e .env.test -- vitest run src/infrastructure/tests/Integration/Auth.spec.ts"
   },
   "dependencies": {
     "@better-auth/prisma-adapter": "^1.6.11",
     "@prisma/client": "^6.2.1",
     "better-auth": "^1.6.11",
     "dotenv": "^17.4.2",
-    "express": "^5.2.1"
+    "express": "5.2.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",

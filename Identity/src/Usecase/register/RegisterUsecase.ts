@@ -1,7 +1,8 @@
-import { Usuario } from "../../Domain/entities/User";
+import { Usuario } from "../../Domain/entities/Usuario";
 import { IRepositorioUsuario } from "../../Domain/repositories/IUserRepository";
 import { IPasswordHasher } from "../../Domain/service/IPasswordHasher";
 import { RegisterUserInputDto, RegisterUserOutputDto } from "../DTO/RegisterUser.dto";
+import { EmailJaCadastradoError } from "../../Domain/errors/DomainError";
 import crypto from "crypto";
 
 export class RegisterUseCase {
@@ -14,18 +15,19 @@ export class RegisterUseCase {
         const usuarioExistente = await this.repositorioUsuario.buscarPorEmail(entrada.email);
 
         if (usuarioExistente) {
-            throw new Error("Já existe um usuário com esse e-mail no sistema");
+            throw new EmailJaCadastradoError();
         }
+
+        const senhaHasheada = await this.hasherSenha.hash(entrada.password);
 
         const novoUsuario = new Usuario(
             crypto.randomUUID(),
             entrada.name,
             entrada.email,
             entrada.role,
-            new Date()
+            new Date(),
+            senhaHasheada
         );
-
-        const senhaHasheada = await this.hasherSenha.hash(entrada.password);
 
         await this.repositorioUsuario.salvar(novoUsuario, senhaHasheada);
 

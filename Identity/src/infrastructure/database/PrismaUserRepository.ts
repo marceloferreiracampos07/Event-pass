@@ -1,5 +1,5 @@
 import { prisma } from "./prisma";
-import { Usuario, PapelUsuario } from "../../Domain/entities/User";
+import { Usuario, PapelUsuario } from "../../Domain/entities/Usuario";
 import { IRepositorioUsuario } from "../../Domain/repositories/IUserRepository";
 import crypto from "crypto";
 
@@ -32,7 +32,7 @@ export class PrismaUserRepository implements IRepositorioUsuario {
                 usuarioPrisma.createdAt,
                 usuarioPrisma.accounts[0]?.password ?? undefined
             );
-        } catch (erro: any) {
+        } catch (erro: unknown) {
             this.tratarErro("buscar usuário por e-mail", erro);
         }
     }
@@ -55,7 +55,7 @@ export class PrismaUserRepository implements IRepositorioUsuario {
                     }
                 }
             });
-        } catch (erro: any) {
+        } catch (erro: unknown) {
             this.tratarErro("salvar usuário", erro);
         }
     }
@@ -75,13 +75,20 @@ export class PrismaUserRepository implements IRepositorioUsuario {
                 usuarioPrisma.role as PapelUsuario,
                 usuarioPrisma.createdAt
             );
-        } catch (erro: any) {
+        } catch (erro: unknown) {
             this.tratarErro("buscar usuário por ID", erro);
         }
     }
 
-    private tratarErro(contexto: string, erro: any): never {
-        const mensagem = erro instanceof Error ? erro.message : String(erro);
+    private tratarErro(contexto: string, erro: unknown): never {
+        let mensagem = "Erro desconhecido";
+        
+        if (erro instanceof Error) {
+            mensagem = erro.message;
+        } else if (typeof erro === "string") {
+            mensagem = erro;
+        }
+        
         throw new Error(`Falha ao ${contexto}: ${mensagem}`);
     }
 }

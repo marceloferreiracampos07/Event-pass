@@ -1,15 +1,22 @@
 export type PapelUsuario = "ADMIN" | "CUSTOMER";
 
 export class Usuario {
+    private _senha?: string;
+
     constructor(
         public readonly id: string,
-        public nome: string,
-        public email: string,
-        public papel: PapelUsuario,
-        public criadoEm: Date,
-        public senha?: string
+        public readonly nome: string,
+        public readonly email: string,
+        public readonly papel: PapelUsuario,
+        public readonly criadoEm: Date,
+        senha?: string
     ) {
         this.validar();
+        this._senha = senha;
+    }
+
+    get senha(): string | undefined {
+        return this._senha;
     }
 
     private validar(): void {

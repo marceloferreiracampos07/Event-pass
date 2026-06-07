@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { Usuario } from "../../../Domain/entities/User";
+import { Usuario } from "../../../Domain/entities/Usuario";
 
 describe("Usuario (Entidade de Domínio)", () => {
     const DATA_MOCK = new Date();

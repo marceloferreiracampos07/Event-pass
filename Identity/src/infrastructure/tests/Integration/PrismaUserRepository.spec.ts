@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { PrismaUserRepository } from "../../database/PrismaUserRepository";
-import { Usuario, PapelUsuario } from "../../../Domain/entities/User";
+import { Usuario, PapelUsuario } from "../../../Domain/entities/Usuario";
 import { prisma } from "../../database/prisma";
 
 describe("PrismaUserRepository", () => {

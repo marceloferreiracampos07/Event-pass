@@ -1,4 +1,4 @@
-import { Usuario } from "../entities/User";
+import { Usuario } from "../entities/Usuario";
 
 export interface IRepositorioUsuario {
     buscarPorEmail(email: string): Promise<Usuario | null>;
