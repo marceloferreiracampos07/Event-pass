@@ -12,7 +12,10 @@ export class CreateBookingUseCase {
 
         const bookingDomain = new Booking(
             entrada.eventId,
-            entrada.userId
+            entrada.userId,
+            entrada.quantidadeIngressos,
+            entrada.tipoIngresso,
+            entrada.setor
         )
 
          

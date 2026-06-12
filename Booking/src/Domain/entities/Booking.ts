@@ -3,7 +3,10 @@ export type BookingStatus = 'PENDING' | 'CONFIRMED' | 'CANCELLED';
 export class Booking {
   constructor(
     public eventId: number, 
-    public userId: number,  
+    public userId: number,
+    public quantidadeIngressos: number,
+    public tipoIngresso: string,
+    public setor: string,
     public status: BookingStatus = 'PENDING',
     public readonly id?: number,
     public readonly createdAt: Date = new Date()
@@ -19,6 +22,18 @@ export class Booking {
 
     if (!this.userId || this.userId <= 0 || isNaN(this.userId)) {
       throw new Error("O ID do usuário é obrigatório e deve ser um número válido superior a zero");
+    }
+
+    if (!this.quantidadeIngressos || this.quantidadeIngressos <= 0) {
+      throw new Error("A quantidade de ingressos deve ser maior que zero");
+    }
+
+    if (!this.tipoIngresso || this.tipoIngresso.trim() === "") {
+      throw new Error("O tipo de ingresso é obrigatório");
+    }
+
+    if (!this.setor || this.setor.trim() === "") {
+      throw new Error("O setor é obrigatório");
     }
     
     if (!this.id && this.status !== 'PENDING') {
