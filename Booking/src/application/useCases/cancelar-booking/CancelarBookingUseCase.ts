@@ -1,6 +1,6 @@
 import { IBookingRepository } from "../../../Domain/repositories/IBookingRepository";
-import { CancelarBookinginput } from "../create-booking/Dto/CancelarBookingInput";
-import { CancelarBookingOutput } from "../create-booking/Dto/CancelarBookingOutput";
+import { CancelarBookinginput } from "../Dto/CancelarBookingInput";
+import { CancelarBookingOutput } from "../Dto/CancelarBookingOutput";
 import { IEventBroadcaster } from "../../../Domain/Broadcast/IEventBroadcaster";
 
 export class CancelarBookingUseCase {

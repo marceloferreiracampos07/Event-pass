@@ -1,7 +1,7 @@
 import { IBookingRepository } from "../../../Domain/repositories/IBookingRepository";
 import { IEventBroadcaster } from "../../../Domain/Broadcast/IEventBroadcaster";
-import { ConfirmarBookingInput } from "../create-booking/Dto/ConfirmarBookingInput";
-import { ConfirmarBookingOutput } from "../create-booking/Dto/ConfirmarBookingOutput";
+import { ConfirmarBookingInput } from "../Dto/ConfirmarBookingInput";
+import { ConfirmarBookingOutput } from "../Dto/ConfirmarBookingOutput";
 
 export class ConfirmarBookingUseCase {
     constructor(

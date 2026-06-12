@@ -1,7 +1,7 @@
 import { Booking } from "../../../Domain/entities/Booking"
 import { IBookingRepository } from "../../../Domain/repositories/IBookingRepository"
-import { CreateBookingInput } from "./Dto/CreateBookingInput"
-import { CreateBookingOutput } from "./Dto/CreateBookingOutput"
+import { CreateBookingInput } from "../Dto/CreateBookingInput"
+import { CreateBookingOutput } from "../Dto/CreateBookingOutput"
 
 export class CreateBookingUseCase {
     constructor(

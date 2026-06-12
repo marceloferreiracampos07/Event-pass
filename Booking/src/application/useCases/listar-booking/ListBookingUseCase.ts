@@ -1,6 +1,6 @@
 import { IBookingRepository } from "../../../Domain/repositories/IBookingRepository";
-import { ListarBookingOutput } from "../create-booking/Dto/ListarBookingOutput";
-import { ListarBookingInput } from "../create-booking/Dto/ListarBookingInput";
+import { ListarBookingOutput } from "../Dto/ListarBookingOutput";
+import { ListarBookingInput } from "../Dto/ListarBookingInput";
 
 export class ListBookingUseCase{
     constructor(
