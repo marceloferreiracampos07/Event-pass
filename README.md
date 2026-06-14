@@ -121,8 +121,8 @@ npm run test:coverage
 
 - **Identity Service:** Auth, Users, Roles. (Status: 🟢 Production Ready)
 - **Catalog Service:** Events, Categories, Search. (Status: 🟢 Production Ready)
-- **Booking Service:** Orders, Payments, Inventory. (Status: 🔴 Planned)
-- **Notification Service:** Email worker. (Status: 🔴 Planned)
+- **Booking Service:** Orders, Payments, Inventory. (Status: 🟢 Production Ready)
+- **Notification Service:** Email worker. (Status: 🟡 In Progress)
 
 ---
 
@@ -139,7 +139,10 @@ pm run test:coverage.
 #### 2. Identity Service (Finalizado)
 - Refatoração, 100% cobertura, segurança (Argon2, Helmet).
 
-#### 3. Catalog Service (Finalizado)
+#### 3. Booking Service (Finalizado)
+- Estruturação completa, domínios e use cases implementados.
+
+#### 4. Catalog Service (Finalizado)
 - Injeção de dependência, segurança, 100% cobertura, refatoração de erros.
 
 #### 🚀 Status Final
@@ -147,7 +150,8 @@ pm run test:coverage.
 | :--- | :--- | :--- |
 | **Identity** | 100% | 🟢 Production Ready |
 | **Catalog** | 100% | 🟢 Production Ready |
-</details>
+| **Booking** | - | 🟢 Production Ready |
+| **Notification** | - | 🟡 In Progress |
 
 ---
 <p align="center">

@@ -10,6 +10,20 @@ services:
       - 3308:3306
     volumes:
       - identity-db-data:/var/lib/mysql
+
+  identity-service:
+    build:
+      context: ./Identity
+      dockerfile: ./Dockerfile
+    container_name: identity-service
+    restart: always
+    ports:
+      - 3001:3001
+    environment:
+      DATABASE_URL: mysql://root:Jr2007@identity-banco:3306/identity_db
+    depends_on:
+      - identity-banco
+
   catalog-banco:
     image: mysql:8.0
     container_name: catalog-banco
@@ -21,6 +35,56 @@ services:
       - 3307:3306
     volumes:
       - catalog-db-data:/var/lib/mysql
+
+  catalog-service:
+    build:
+      context: ./Catalog
+      dockerfile: ./Dockerfile
+    container_name: catalog-service
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      DATABASE_URL: mysql://root:Jr2007@catalog-banco:3306/catalog_db
+    depends_on:
+      - catalog-banco
+
+  booking-banco:
+    image: mysql:8.0
+    container_name: booking-banco
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Jr2007
+      MYSQL_DATABASE: booking_db
+    ports:
+      - 3309:3306
+    volumes:
+      - booking-db-data:/var/lib/mysql
+
+  booking-service:
+    build:
+      context: ./Booking
+      dockerfile: ./Dockerfile
+    container_name: booking-service
+    restart: always
+    ports:
+      - 3002:3000
+    environment:
+      DATABASE_URL: mysql://root:Jr2007@booking-banco:3306/booking_db
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - booking-banco
+      - redis
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: always
+    ports:
+      - 6379:6379
+
 volumes:
   identity-db-data:
   catalog-db-data:
+  booking-db-data:
