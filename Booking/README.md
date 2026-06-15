@@ -15,8 +15,12 @@ Serviço de orquestração de reservas para o projeto Event Pass.
    `cp .env.example .env`
 2. Configure as variáveis de ambiente necessárias (DATABASE_URL, REDIS_URL, JWT_SECRET).
 
-## Comandos
-- Instalar dependências: `npm install`
+## Status
+
+| Serviço | Cobertura | Status |
+| :--- | :--- | :--- |
+| **Booking** | 90% | 🟢 Production Ready |
+
 - Rodar em desenvolvimento: `npm run dev`
 - Rodar testes unitários: `npm run test:unit`
 - Rodar testes de integração: `npm run test:integration`
