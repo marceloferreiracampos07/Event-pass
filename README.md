@@ -150,7 +150,7 @@ pm run test:coverage.
 | :--- | :--- | :--- |
 | **Identity** | 100% | 🟢 Production Ready |
 | **Catalog** | 100% | 🟢 Production Ready |
-| **Booking** | - | 🟢 Production Ready |
+| **Booking** | 95%| 🟢 Production Ready |
 | **Notification** | - | 🟡 In Progress |
 
 ---
