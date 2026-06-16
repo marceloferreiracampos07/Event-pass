@@ -110,9 +110,13 @@ docker-compose up --build
 ## 🧪 Testing & Quality
 
 - **Coverage:** High coverage across all services.
+
+Run coverage tests for each service:
 ```bash
-# Example for Booking service
+npm run test:coverage --prefix Identity
+npm run test:coverage --prefix Catalog
 npm run test:coverage --prefix Booking
+npm run test:coverage --prefix Notification
 ```
 
 ---
