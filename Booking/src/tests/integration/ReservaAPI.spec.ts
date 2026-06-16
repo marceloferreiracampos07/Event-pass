@@ -1,21 +1,53 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, vi } from 'vitest';
 import request from 'supertest';
 import { app } from '@/app';
 import jwt from 'jsonwebtoken';
-import { PrismaClient } from '@/generated/prisma';
+import { configuracao } from '@/infrastructure/config/configuracao';
 
-const prisma = new PrismaClient();
-const segredo = process.env.JWT_SECRET || 'test-secret';
+// Mock do Prisma Client
+vi.mock('@/generated/prisma/index', () => {
+    return {
+        PrismaClient: class {
+            booking = {
+                create: vi.fn().mockResolvedValue({
+                    id: 1,
+                    eventId: 100,
+                    userId: 1,
+                    status: 'PENDING',
+                    createdAt: new Date(),
+                    quantidadeIngressos: 2,
+                    tipoIngresso: 'Regular',
+                    setor: 'Geral'
+                }),
+                deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+                findUnique: vi.fn().mockResolvedValue(null),
+                findMany: vi.fn().mockResolvedValue([])
+            };
+            $connect = vi.fn().mockResolvedValue(undefined);
+            $disconnect = vi.fn().mockResolvedValue(undefined);
+        }
+    };
+});
+
+// Mock dos Serviços Externos
+vi.mock('@/infrastructure/Broadcast/PrismaBookingService', () => ({
+    RedisBroadcastService: class {
+        publish = vi.fn().mockResolvedValue(undefined);
+    }
+}));
+
+vi.mock('@/infrastructure/Services/ExternalEventService', () => ({
+    ExternalEventService: class {
+        verificarDisponibilidade = vi.fn().mockResolvedValue(true);
+    }
+}));
 
 describe('Integração API de Reserva', () => {
   let token: string;
+  const segredo = configuracao.jwtSegredo || 'test-secret';
 
   beforeAll(async () => {
     token = jwt.sign({ id: 1, role: 'CUSTOMER' }, segredo);
-  });
-
-  afterAll(async () => {
-    await prisma.$disconnect();
   });
 
   it('deve criar uma reserva via POST /api/v1/bookings', async () => {
@@ -30,7 +62,7 @@ describe('Integração API de Reserva', () => {
       });
 
     if (resposta.status !== 201) {
-        // Log is not needed in clean tests.
+        console.error('DEBUG - Criar Path - Body:', JSON.stringify(resposta.body));
     }
     expect(resposta.status).toBe(201);
     expect(resposta.body).toHaveProperty('id');

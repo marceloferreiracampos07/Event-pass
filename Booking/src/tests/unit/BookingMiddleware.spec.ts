@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+﻿import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Request, Response, NextFunction } from 'express';
 
 // Define the mock outside to be accessible
@@ -37,7 +37,7 @@ describe('BookingMiddleware', () => {
         vi.clearAllMocks();
     });
 
-    it('deve retornar 400 se o id não for fornecido ou inválido', async () => {
+    it('deve retornar 400 se o id não for fornecido ou invÃ¡lido', async () => {
         await loadBookingMiddleware(mockReq as Request, mockRes as Response, next);
         expect(mockRes.status).toHaveBeenCalledWith(400);
     });
@@ -58,3 +58,4 @@ describe('BookingMiddleware', () => {
         expect((mockReq as any).booking).toEqual(booking);
     });
 });
+

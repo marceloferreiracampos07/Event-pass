@@ -1,12 +1,14 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+﻿import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { Request, Response, NextFunction } from 'express';
 import { authMiddleware } from '@/infrastructure/http/Middleware/AuthMiddleware';
 import jwt from 'jsonwebtoken';
+import { configuracao } from '@/infrastructure/config/configuracao';
 
 describe('AuthMiddleware', () => {
     let mockReq: Partial<Request>;
     let mockRes: Partial<Response>;
     let next: NextFunction;
+    const segredoOriginal = configuracao.jwtSegredo;
 
     beforeEach(() => {
         mockReq = { headers: {} };
@@ -15,10 +17,14 @@ describe('AuthMiddleware', () => {
             json: vi.fn().mockReturnThis(),
         };
         next = vi.fn();
-        process.env.JWT_SECRET = 'secret';
+        configuracao.jwtSegredo = 'secret';
     });
 
-    it('deve retornar 401 se não houver header de autorização', () => {
+    afterEach(() => {
+        configuracao.jwtSegredo = segredoOriginal;
+    });
+
+    it('deve retornar 401 se não houver header de autorizaÃ§Ã£o', () => {
         authMiddleware(mockReq as Request, mockRes as Response, next);
         expect(mockRes.status).toHaveBeenCalledWith(401);
     });
@@ -30,7 +36,7 @@ describe('AuthMiddleware', () => {
     });
 
     it('deve retornar 500 se não houver JWT_SECRET', () => {
-        delete process.env.JWT_SECRET;
+        configuracao.jwtSegredo = undefined;
         mockReq.headers = { authorization: 'Bearer token' };
         authMiddleware(mockReq as Request, mockRes as Response, next);
         expect(mockRes.status).toHaveBeenCalledWith(500);
@@ -51,3 +57,4 @@ describe('AuthMiddleware', () => {
         expect((mockReq as any).user).toBeDefined();
     });
 });
+

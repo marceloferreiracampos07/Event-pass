@@ -1,3 +1,3 @@
-export interface ListarBookingInput {
+﻿export interface ListarBookingInput {
     userId: number; 
 }

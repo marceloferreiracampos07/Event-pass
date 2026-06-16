@@ -1,26 +1,28 @@
-import express from 'express';
+﻿import express from 'express';
 import { PrismaClient } from './generated/prisma';
 import { PrismaReservaRepository } from './infrastructure/Database/PrismaReservaRepository';
 import { RedisBroadcastService } from './infrastructure/Broadcast/PrismaBookingService';
 import { ExternalEventService } from './infrastructure/Services/ExternalEventService';
-import { CriarReservaUseCase } from './application/useCases/create-booking/CriarReservaUseCase';
-import { ConfirmarReservaUseCase } from './application/useCases/confirmar-booking/ConfirmarReservaUseCase';
-import { RejeitarReservaUseCase } from './application/useCases/rejeitar-booking/RejeitarReservaUseCase';
+import { CriarReservaUseCase } from './application/useCases/criar-reserva/CriarReservaUseCase';
+import { ConfirmarReservaUseCase } from './application/useCases/confirmar-reserva/ConfirmarReservaUseCase';
+import { RejeitarReservaUseCase } from './application/useCases/rejeitar-reserva/RejeitarReservaUseCase';   
 import { ReservaController } from './infrastructure/http/controllers/ReservaController';
 import { criarRotasReserva } from './infrastructure/http/routes/ReservaRoutes';
-import dotenv from 'dotenv';
-import path from 'path';
+import { configuracao, validarConfiguracao } from './infrastructure/config/configuracao';
 
-if (process.env.NODE_ENV === 'test') {
-    dotenv.config({ path: path.resolve(__dirname, '../.env.test') });
-} else {
-    dotenv.config();
-}
+validarConfiguracao();
 
 const app = express();
 app.use(express.json());
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+    datasources: {
+        db: {
+            url: configuracao.bancoDadosUrl,
+        },
+    },
+});
+
 const repositorioReserva = new PrismaReservaRepository(prisma);
 const servicoTransmissao = new RedisBroadcastService();
 const servicoEvento = new ExternalEventService();
@@ -37,14 +39,12 @@ const reservaController = new ReservaController(
 
 app.use('/api/v1/bookings', criarRotasReserva(reservaController));
 
-if (process.env.NODE_ENV !== 'test') {
-    const PORT = process.env.PORT;
-    if (!PORT) {
-        throw new Error("PORT não configurada no ambiente");
-    }
+if (configuracao.ambiente !== 'test') {
+    const PORT = configuracao.porta;
     app.listen(PORT, () => {
-        console.log(`Serviço de Reservas rodando na porta ${PORT}`);
+        console.log(`ServiÃ§o de Reservas rodando na porta ${PORT}`);
     });
 }
 
-export { app };
+export { app, prisma };
+

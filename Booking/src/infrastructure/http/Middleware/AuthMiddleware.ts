@@ -1,5 +1,6 @@
-import { Request, Response, NextFunction } from "express";
+﻿import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { configuracao } from "../../config/configuracao";
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
@@ -15,22 +16,24 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     }
 
     try {
-        const secret = process.env.JWT_SECRET;
+        const secret = configuracao.jwtSegredo;
+        
         if (!secret) {
-            console.error("JWT_SECRET não configurado no ambiente");
-            return res.status(500).json({ error: "Erro interno de configuração" });
+            console.error("JWT_SECRET não configurado");
+            return res.status(500).json({ error: "Erro interno de configuraÃ§Ã£o" });
         }
 
         const decoded = jwt.verify(token, secret) as any;
-        
+
         const role = decoded.role?.toUpperCase();
         if (role !== "CUSTOMER") {
-            return res.status(403).json({ error: "Acesso negado. Requer autenticação de Customer." });
+            return res.status(403).json({ error: "Acesso negado. Requer autenticaÃ§Ã£o de Cliente." });
         }
 
         (req as any).user = decoded;
         return next();
     } catch (err) {
-        return res.status(401).json({ error: "Token inválido" });
+        return res.status(401).json({ error: "Token invÃ¡lido" });
     }
 };
+

@@ -1,10 +1,10 @@
 node_modules
 dist
 .env
-.env.*
+.env.test
 npm-debug.log
-*.log
+Dockerfile
+.dockerignore
 .git
-.vscode
-.idea
-coverage
+.gitignore
+README.md

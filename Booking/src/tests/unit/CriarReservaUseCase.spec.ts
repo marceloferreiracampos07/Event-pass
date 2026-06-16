@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { CriarReservaUseCase } from '../../application/useCases/create-booking/CriarReservaUseCase';
+﻿import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { CriarReservaUseCase } from '../../application/useCases/criar-reserva/CriarReservaUseCase';
 import { IReservaRepository } from '../../Domain/repositories/IReservaRepository';
 import { IEventService } from '../../Domain/services/IEventService';
 import { IEventBroadcaster } from '../../Domain/Broadcast/IEventBroadcaster';
@@ -42,7 +42,7 @@ describe('Caso de Uso CriarReserva', () => {
     expect(transmissorEvento.publish).toHaveBeenCalled();
   });
 
-  it('deve lançar erro se não houver ingressos', async () => {
+  it('deve lanÃ§ar erro se não houver ingressos', async () => {
     vi.spyOn(servicoEvento, 'verificarDisponibilidade').mockResolvedValue(false);
 
     const entrada = {
@@ -53,6 +53,7 @@ describe('Caso de Uso CriarReserva', () => {
       setor: 'Setor A',
     };
 
-    await expect(sut.executar(entrada)).rejects.toThrow('Não há ingressos disponíveis');
+    await expect(sut.executar(entrada)).rejects.toThrow('não hÃ¡ ingressos disponÃ­veis');
   });
 });
+

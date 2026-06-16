@@ -1,3 +1,3 @@
-export interface ConfirmarBookingInput {
+﻿export interface ConfirmarBookingInput {
     id: number;
 }

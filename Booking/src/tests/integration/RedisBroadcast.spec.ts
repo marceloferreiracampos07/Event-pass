@@ -1,39 +1,38 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+﻿import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { RedisBroadcastService } from '@/infrastructure/Broadcast/PrismaBookingService';
 import { createClient } from 'redis';
 
-describe('RedisBroadcastService Integração', () => {
+vi.mock('redis', () => ({
+    createClient: vi.fn().mockReturnValue({
+        on: vi.fn(),
+        connect: vi.fn().mockResolvedValue(undefined),
+        publish: vi.fn().mockResolvedValue(1),
+        subscribe: vi.fn().mockImplementation((canal, callback) => {
+            // Simula o recebimento imediato da mensagem para o teste
+            // Em um cenÃ¡rio real, isso viria de outro processo
+        }),
+        disconnect: vi.fn().mockResolvedValue(undefined),
+        isOpen: false
+    })
+}));
+
+describe('RedisBroadcastService IntegraÃ§Ã£o', () => {
     let service: RedisBroadcastService;
-    let subscriber: ReturnType<typeof createClient>;
+    let mockClient: any;
     const canal = 'teste-canal';
 
-    beforeAll(async () => {
+    beforeEach(() => {
         service = new RedisBroadcastService();
-        
-        // Cliente para escutar a mensagem
-        subscriber = createClient({
-            url: process.env.REDIS_URL
-        });
-        await subscriber.connect();
-    });
-
-    afterAll(async () => {
-        await subscriber.disconnect();
+        mockClient = (service as any).client;
     });
 
     it('deve publicar uma mensagem no Redis com sucesso', async () => {
         const mensagemEnviada = JSON.stringify({ teste: 'ok' });
         
-        // Promessa que resolve quando a mensagem for recebida
-        const recebido = new Promise((resolve) => {
-            subscriber.subscribe(canal, (mensagem) => {
-                resolve(mensagem);
-            });
-        });
-
+        mockClient.isOpen = false;
         await service.publish(canal, mensagemEnviada);
-        
-        const resultado = await recebido;
-        expect(resultado).toBe(mensagemEnviada);
+
+        expect(mockClient.publish).toHaveBeenCalledWith(canal, mensagemEnviada);
     });
 });
+

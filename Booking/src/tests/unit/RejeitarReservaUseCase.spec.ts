@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { RejeitarReservaUseCase } from '@/application/useCases/rejeitar-booking/RejeitarReservaUseCase';
+﻿import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { RejeitarReservaUseCase } from '@/application/useCases/rejeitar-reserva/RejeitarReservaUseCase';
 import { IReservaRepository } from '@/Domain/repositories/IReservaRepository';
 import { IEventBroadcaster } from '@/Domain/Broadcast/IEventBroadcaster';
 import { Reserva } from '@/Domain/entities/Reserva';
@@ -35,8 +35,9 @@ describe('RejeitarReservaUseCase', () => {
         expect(mockTransmissor.publish).toHaveBeenCalled();
     });
 
-    it('deve lançar erro se a reserva não existir', async () => {
+    it('deve lanÃ§ar erro se a reserva não existir', async () => {
         vi.spyOn(mockRepositorio, 'buscarPorId').mockResolvedValue(null);
         await expect(useCase.executar({ id: 99 })).rejects.toThrow('Reserva com ID 99 não encontrada');
     });
 });
+

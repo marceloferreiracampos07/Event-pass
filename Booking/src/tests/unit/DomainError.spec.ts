@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+﻿import { describe, it, expect } from 'vitest';
 import { 
     AvailabilityError, 
     UnauthorizedError, 
@@ -9,7 +9,7 @@ import {
 describe('Domain Errors', () => {
     it('deve instanciar AvailabilityError corretamente', () => {
         const error = new AvailabilityError();
-        expect(error.message).toBe("Não há ingressos disponíveis para este setor ou evento.");
+        expect(error.message).toBe("não hÃ¡ ingressos disponÃ­veis para este setor ou evento.");
         expect(error.statusCode).toBe(409);
         expect(error.errorCode).toBe("BOOKING_NO_TICKETS_AVAILABLE");
     });
@@ -21,9 +21,9 @@ describe('Domain Errors', () => {
         expect(error.errorCode).toBe("CUSTOMER_AUTH_REQUIRED");
     });
 
-    it('deve instanciar BookingValidationError com mensagem padrão', () => {
+    it('deve instanciar BookingValidationError com mensagem padrÃ£o', () => {
         const error = new BookingValidationError();
-        expect(error.message).toBe("Dados da reserva inválidos ou ausentes.");
+        expect(error.message).toBe("Dados da reserva invÃ¡lidos ou ausentes.");
         expect(error.statusCode).toBe(400);
         expect(error.errorCode).toBe("INVALID_BOOKING_INPUT");
     });
@@ -33,10 +33,11 @@ describe('Domain Errors', () => {
         expect(error.message).toBe("Erro customizado");
     });
 
-    it('deve instanciar BookingRejectedError com mensagem padrão', () => {
+    it('deve instanciar BookingRejectedError com mensagem padrÃ£o', () => {
         const error = new BookingRejectedError();
         expect(error.message).toBe("A reserva foi rejeitada devido a falhas no processamento.");
         expect(error.statusCode).toBe(422);
         expect(error.errorCode).toBe("BOOKING_REJECTED");
     });
 });
+

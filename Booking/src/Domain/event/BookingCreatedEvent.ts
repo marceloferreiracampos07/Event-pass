@@ -1,4 +1,4 @@
-import { Booking } from "../entities/Booking";
+﻿import { Booking } from "../entities/Booking";
 
 export class BookingCreatedEvent {
     public readonly occurredAt: Date;

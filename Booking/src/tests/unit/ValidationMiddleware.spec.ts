@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+﻿import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Request, Response, NextFunction } from 'express';
 import { validate } from '@/infrastructure/http/Middleware/ValidationMiddleware';
 import { z } from 'zod';
@@ -17,17 +17,18 @@ describe('ValidationMiddleware', () => {
         next = vi.fn();
     });
 
-    it('deve chamar o next se a validação passar', () => {
+    it('deve chamar o next se a validaÃ§Ã£o passar', () => {
         const schema = z.object({ body: z.object({ name: z.string() }) });
         mockReq.body = { name: 'test' };
         validate(schema)(mockReq as Request, mockRes as Response, next);
         expect(next).toHaveBeenCalled();
     });
 
-    it('deve retornar 400 se a validação falhar', () => {
+    it('deve retornar 400 se a validaÃ§Ã£o falhar', () => {
         const schema = z.object({ body: z.object({ name: z.string() }) });
         mockReq.body = { name: 123 };
         validate(schema)(mockReq as Request, mockRes as Response, next);
         expect(mockRes.status).toHaveBeenCalledWith(400);
     });
 });
+

@@ -1,4 +1,4 @@
-import { Reserva, StatusReserva } from "../entities/Reserva"
+﻿import { Reserva, StatusReserva } from "../entities/Reserva"
 
 export interface IReservaRepository {
     criar(reserva: Reserva): Promise<Reserva>
@@ -6,3 +6,4 @@ export interface IReservaRepository {
     atualizarStatus(id: number, status: StatusReserva): Promise<void>
     buscarPorUsuarioId(usuarioId: number): Promise<Reserva[]>
 }
+

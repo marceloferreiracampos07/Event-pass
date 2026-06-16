@@ -1,4 +1,4 @@
-export enum BookingChannels {
+﻿export enum BookingChannels {
     BOOKINGS = "bookings",
     BOOKINGS_CREATE = "bookingchannel-create",
     BOOKINGS_CONFIRM = "bookingchannel-confirm",

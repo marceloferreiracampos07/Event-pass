@@ -1,13 +1,11 @@
-import { Request, Response, NextFunction } from "express";
-import { PrismaClient } from "../../../generated/prisma/index";
-
-const prisma = new PrismaClient();
+﻿import { Request, Response, NextFunction } from "express";
+import { PrismaClient } from "../../../generated/prisma"; const prisma = new PrismaClient();
 
 export const loadBookingMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 
     if (!id || isNaN(Number(id))) {
-        return res.status(400).json({ error: "ID da reserva inválido" });
+        return res.status(400).json({ error: "ID da reserva invÃ¡lido" });
     }
 
     try {
@@ -25,3 +23,5 @@ export const loadBookingMiddleware = async (req: Request, res: Response, next: N
         res.status(500).json({ error: "Erro ao buscar reserva" });
     }
 };
+
+

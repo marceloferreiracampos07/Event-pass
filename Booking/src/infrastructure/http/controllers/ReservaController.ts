@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
-import { CriarReservaUseCase } from "../../../application/useCases/create-booking/CriarReservaUseCase"
-import { ConfirmarReservaUseCase } from "../../../application/useCases/confirmar-booking/ConfirmarReservaUseCase"
-import { RejeitarReservaUseCase } from "../../../application/useCases/rejeitar-booking/RejeitarReservaUseCase"
+import { CriarReservaUseCase } from "../../../application/useCases/criar-reserva/CriarReservaUseCase"
+import { ConfirmarReservaUseCase } from "../../../application/useCases/confirmar-reserva/ConfirmarReservaUseCase"
+import { RejeitarReservaUseCase } from "../../../application/useCases/rejeitar-reserva/RejeitarReservaUseCase"
 import { DomainError, BookingValidationError } from "../../../Domain/errors/DomainError"
 import { CriarReservaInput } from "../../../application/useCases/Dto/CriarReservaInput"
 
@@ -16,7 +16,7 @@ export class ReservaController {
         try {
             const usuario = (req as any).user;
             if (!usuario?.id) {
-                return res.status(401).json({ erro: "Usuário não autenticado" });
+                return res.status(401).json({ erro: "Usuário n�o autenticado" });
             }
 
             const { eventoId, quantidadeIngressos, tipoIngresso, setor } = req.body;
@@ -44,7 +44,7 @@ export class ReservaController {
         try {
             const reserva = (req as any).booking;
             if (!reserva || reserva.status !== "PENDING") {
-                throw new BookingValidationError("Esta reserva não está mais pendente ou não foi encontrada");
+                throw new BookingValidationError("Esta reserva n�o está mais pendente ou n�o foi encontrada");
             }
 
             const saida = await this.confirmarReserva.executar({ id: Number(reserva.id) });
@@ -54,7 +54,7 @@ export class ReservaController {
             if (erro instanceof DomainError) {
                 return res.status(erro.statusCode).json({ erro: erro.message, codigo: erro.errorCode });
             }
-            return res.status(500).json({ erro: "Erro interno no servidor", codigo: "ERRO_INTERNO_SERVIDOR" });
+            console.error("DEBUG - ReservaController - Erro:", erro); return res.status(500).json({ erro: erro.message || "Erro interno no servidor", codigo: "ERRO_INTERNO_SERVIDOR" });
         }
     }
 
@@ -62,7 +62,7 @@ export class ReservaController {
         try {
             const reserva = (req as any).booking;
             if (!reserva || reserva.status !== "PENDING") {
-                throw new BookingValidationError("Esta reserva não está mais pendente ou não foi encontrada");
+                throw new BookingValidationError("Esta reserva n�o está mais pendente ou n�o foi encontrada");
             }
 
             const saida = await this.rejeitarReserva.executar({ id: Number(reserva.id) });
@@ -72,7 +72,8 @@ export class ReservaController {
             if (erro instanceof DomainError) {
                 return res.status(erro.statusCode).json({ erro: erro.message, codigo: erro.errorCode });
             }
-            return res.status(500).json({ erro: "Erro interno no servidor", codigo: "ERRO_INTERNO_SERVIDOR" });
+            console.error("DEBUG - ReservaController - Erro:", erro); return res.status(500).json({ erro: erro.message || "Erro interno no servidor", codigo: "ERRO_INTERNO_SERVIDOR" });
         }
     }
 }
+

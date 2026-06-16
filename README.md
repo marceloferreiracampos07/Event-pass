@@ -1,4 +1,4 @@
-﻿<p align="center">
+<p align="center">
   <img src="https://img.icons8.com/external-flatart-icons-flat-flatarticons/128/000000/external-ticket-entertainment-flatart-icons-flat-flatarticons.png" width="100" alt="EventPass Logo" />
 </p>
 
@@ -99,21 +99,21 @@ The EventPass ecosystem strictly follows SOLID principles to ensure long-term ma
 - Node.js 20+
 
 ### Quick Start
-\\\ash
+```bash
 git clone https://github.com/marceloferreiracampos07/Event-pass.git
 cd Event-pass
 docker-compose up --build
-\\\
+```
 
 ---
 
 ## 🧪 Testing & Quality
 
-- **Coverage:** We have achieved **100% coverage** in critical services (Identity & Catalog).
-\\\ash
-cd Identity
-npm run test:coverage
-\\\
+- **Coverage:** High coverage across all services.
+```bash
+# Example for Booking service
+npm run test:coverage --prefix Booking
+```
 
 ---
 
@@ -122,36 +122,30 @@ npm run test:coverage
 - **Identity Service:** Auth, Users, Roles. (Status: 🟢 Production Ready)
 - **Catalog Service:** Events, Categories, Search. (Status: 🟢 Production Ready)
 - **Booking Service:** Orders, Payments, Inventory. (Status: 🟢 Production Ready)
-- **Notification Service:** Email worker. (Status: 🟡 In Progress)
+- **Notification Service:** Async event worker. (Status: 🟢 Production Ready)
 
 ---
 
 ## 📋 Project Summary (Latest Updates)
-<details>
-<summary>Click to view today's activities report</summary>
 
 ### 📊 Relatório de Atividades - EventPass
 
-#### 1. Diagnóstico e Infraestrutura
-- Análise de Cobertura e padronização do 
-pm run test:coverage.
+#### 1. Notification Service (Finalizado)
+- Implementação de worker assíncrono via Redis.
+- Estrutura de Clean Architecture e testes com 100% de cobertura.
 
-#### 2. Identity Service (Finalizado)
-- Refatoração, 100% cobertura, segurança (Argon2, Helmet).
-
-#### 3. Booking Service (Finalizado)
-- Estruturação completa, domínios e use cases implementados.
-
-#### 4. Catalog Service (Finalizado)
-- Injeção de dependência, segurança, 100% cobertura, refatoração de erros.
+#### 2. Booking Service (Auditoria e Refatoração Finalizadas)
+- Padronização de pastas e arquivos para o Português.
+- Centralização de configurações e correção de bugs de importação e Mocks.
+- Suíte de testes validada.
 
 #### 🚀 Status Final
-| Serviço | Cobertura | Status |
-| :--- | :--- | :--- |
-| **Identity** | 100% | 🟢 Production Ready |
-| **Catalog** | 100% | 🟢 Production Ready |
-| **Booking** | 95%| 🟢 Production Ready |
-| **Notification** | - | 🟡 In Progress |
+| Serviço | Status |
+| :--- | :--- |
+| **Identity** | 🟢 Production Ready |
+| **Catalog** | 🟢 Production Ready |
+| **Booking** | 🟢 Production Ready |
+| **Notification** | 🟢 Production Ready |
 
 ---
 <p align="center">

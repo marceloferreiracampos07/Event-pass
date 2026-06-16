@@ -1,4 +1,4 @@
-export interface BookingOutputItem {
+﻿export interface BookingOutputItem {
     id: number;
     eventId: number;
     userId: number;

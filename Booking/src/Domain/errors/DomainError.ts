@@ -1,4 +1,4 @@
-export abstract class DomainError extends Error {
+﻿export abstract class DomainError extends Error {
   abstract readonly statusCode: number;
   abstract readonly errorCode: string;
 
@@ -17,7 +17,7 @@ export class AvailabilityError extends DomainError {
   readonly errorCode = "BOOKING_NO_TICKETS_AVAILABLE";
 
   constructor() {
-    super("Não há ingressos disponíveis para este setor ou evento.");
+    super("não hÃ¡ ingressos disponÃ­veis para este setor ou evento.");
   }
 }
 
@@ -34,7 +34,7 @@ export class BookingValidationError extends DomainError {
   readonly statusCode = 400;
   readonly errorCode = "INVALID_BOOKING_INPUT";
 
-  constructor(message: string = "Dados da reserva inválidos ou ausentes.") {
+  constructor(message: string = "Dados da reserva invÃ¡lidos ou ausentes.") {
     super(message);
   }
 }

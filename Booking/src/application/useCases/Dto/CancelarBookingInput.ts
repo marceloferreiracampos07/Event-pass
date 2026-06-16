@@ -1,4 +1,4 @@
-export interface CancelarBookinginput{
+﻿export interface CancelarBookinginput{
     bookingId:number,
     motivo:string
 

@@ -1,4 +1,4 @@
-import { Router } from "express";
+﻿import { Router } from "express";
 import { ReservaController } from "../controllers/ReservaController";
 import { authMiddleware } from "../Middleware/AuthMiddleware";
 import { loadBookingMiddleware } from "../Middleware/BookingMiddleware";
@@ -15,3 +15,4 @@ export function criarRotasReserva(reservaController: ReservaController): Router 
 
     return router;
 }
+

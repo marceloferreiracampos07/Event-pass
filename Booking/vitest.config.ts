@@ -1,5 +1,9 @@
 import { defineConfig } from 'vitest/config';
 import path from 'path';
+import dotenv from 'dotenv';
+
+// Carrega as variáveis do .env.test explicitamente para o ambiente de teste
+dotenv.config({ path: path.resolve(__dirname, '.env.test') });
 
 export default defineConfig({
   test: {

@@ -1,6 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+﻿import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { RedisBroadcastService } from '@/infrastructure/Broadcast/PrismaBookingService';
 import { createClient } from 'redis';
+import { configuracao } from '@/infrastructure/config/configuracao';
 
 vi.mock('redis', () => ({
     createClient: vi.fn().mockReturnValue({
@@ -14,15 +15,20 @@ vi.mock('redis', () => ({
 describe('RedisBroadcastService', () => {
     let service: RedisBroadcastService;
     let mockClient: any;
+    const urlOriginal = configuracao.redisUrl;
 
     beforeEach(() => {
-        process.env.REDIS_URL = 'redis://localhost:6379';
+        configuracao.redisUrl = 'redis://localhost:6379';
         service = new RedisBroadcastService();
         mockClient = (service as any).client;
     });
 
+    afterEach(() => {
+        configuracao.redisUrl = urlOriginal;
+    });
+
     it('should throw if REDIS_URL is not set', () => {
-        delete process.env.REDIS_URL;
+        configuracao.redisUrl = undefined;
         expect(() => new RedisBroadcastService()).toThrow();
     });
 
@@ -35,3 +41,4 @@ describe('RedisBroadcastService', () => {
         expect(mockClient.publish).toHaveBeenCalledWith('channel', 'message');
     });
 });
+
