@@ -37,9 +37,6 @@ export class ReservaController {
     async Confirmar(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const reserva = (req as any).booking;
-            if (!reserva || reserva.status !== "PENDING") {
-                throw new BookingValidationError("Esta reserva não está mais pendente ou não foi encontrada");
-            }
 
             const saida = await this.confirmarReserva.executar({ id: Number(reserva.id) });
             res.status(200).json(saida);
@@ -52,9 +49,6 @@ export class ReservaController {
     async Rejeitar(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const reserva = (req as any).booking;
-            if (!reserva || reserva.status !== "PENDING") {
-                throw new BookingValidationError("Esta reserva não está mais pendente ou não foi encontrada");
-            }
 
             const saida = await this.rejeitarReserva.executar({ id: Number(reserva.id) });
             res.status(200).json(saida);
