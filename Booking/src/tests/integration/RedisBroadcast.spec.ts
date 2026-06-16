@@ -9,14 +9,14 @@ vi.mock('redis', () => ({
         publish: vi.fn().mockResolvedValue(1),
         subscribe: vi.fn().mockImplementation((canal, callback) => {
             // Simula o recebimento imediato da mensagem para o teste
-            // Em um cenÃ¡rio real, isso viria de outro processo
+            // Em um cenário real, isso viria de outro processo
         }),
         disconnect: vi.fn().mockResolvedValue(undefined),
         isOpen: false
     })
 }));
 
-describe('RedisBroadcastService IntegraÃ§Ã£o', () => {
+describe('RedisBroadcastService IntegraÃ§ão', () => {
     let service: RedisBroadcastService;
     let mockClient: any;
     const canal = 'teste-canal';

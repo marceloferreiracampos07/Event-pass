@@ -42,7 +42,7 @@ describe('Caso de Uso CriarReserva', () => {
     expect(transmissorEvento.publish).toHaveBeenCalled();
   });
 
-  it('deve lanÃ§ar erro se não houver ingressos', async () => {
+  it('deve lançar erro se não houver ingressos', async () => {
     vi.spyOn(servicoEvento, 'verificarDisponibilidade').mockResolvedValue(false);
 
     const entrada = {
@@ -53,7 +53,7 @@ describe('Caso de Uso CriarReserva', () => {
       setor: 'Setor A',
     };
 
-    await expect(sut.executar(entrada)).rejects.toThrow('não hÃ¡ ingressos disponÃ­veis');
+    await expect(sut.executar(entrada)).rejects.toThrow('não há ingressos disponíveis');
   });
 });
 

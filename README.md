@@ -132,19 +132,19 @@ npm run test:coverage --prefix Notification
 
 ## 📋 Project Summary (Latest Updates)
 
-### 📊 Relatório de Atividades - EventPass
+### 📊 Activity Report - EventPass
 
-#### 1. Notification Service (Finalizado)
-- Implementação de worker assíncrono via Redis.
-- Estrutura de Clean Architecture e testes com 100% de cobertura.
+#### 1. Notification Service (Completed)
+- Implementation of asynchronous worker via Redis.
+- Clean Architecture structure and tests with 100% coverage.
 
-#### 2. Booking Service (Auditoria e Refatoração Finalizadas)
-- Padronização de pastas e arquivos para o Português.
-- Centralização de configurações e correção de bugs de importação e Mocks.
-- Suíte de testes validada.
+#### 2. Booking Service (Audit and Refactoring Completed)
+- Standardization of folders and files to English (Project-wide consistency).
+- Centralized configurations and fixed import/mock bugs.
+- Validated test suite.
 
-#### 🚀 Status Final
-| Serviço | Status |
+#### 🚀 Final Status
+| Service | Status |
 | :--- | :--- |
 | **Identity** | 🟢 Production Ready |
 | **Catalog** | 🟢 Production Ready |

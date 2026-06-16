@@ -1,23 +1,23 @@
 # Catalog Service
 
-Serviço responsável pela gestão de eventos e controle de estoque de ingressos.
+Service responsible for event management and ticket inventory control.
 
-## Funcionalidades
-- CRUD de Eventos (Criação, Listagem, Detalhamento).
-- Validação de regras de negócio (data não pode ser no passado).
-- Controle de estoque.
-- Autenticação via JWT para rotas administrativas.
+## Features
+- Event CRUD (Creation, Listing, Detailing).
+- Business rule validation (dates cannot be in the past).
+- Inventory control.
+- JWT authentication for administrative routes.
 
-## Tecnologias
-- Node.js com TypeScript
+## Technologies
+- Node.js with TypeScript
 - Express
 - Prisma ORM
 - MySQL
-- Vitest (Testes)
+- Vitest (Testing)
 
-## Configuração
-1. Copie o arquivo `.env.example` para `.env`.
-2. Configure as variáveis de ambiente (`DATABASE_URL`, `JWT_SECRET`).
-3. Suba o ambiente com Docker: `docker-compose up -d`.
-4. Sincronize o banco: `npx prisma db push`.
-5. Rode o projeto: `npm run dev`.
+## Configuration
+1. Copy the `.env.example` file to `.env`.
+2. Configure the environment variables (`DATABASE_URL`, `JWT_SECRET`).
+3. Start the environment with Docker: `docker-compose up -d`.
+4. Synchronize the database: `npx prisma db push`.
+5. Run the project: `npm run dev`.

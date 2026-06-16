@@ -37,7 +37,7 @@ describe('BookingMiddleware', () => {
         vi.clearAllMocks();
     });
 
-    it('deve retornar 400 se o id não for fornecido ou invÃ¡lido', async () => {
+    it('deve retornar 400 se o id não for fornecido ou inválido', async () => {
         await loadBookingMiddleware(mockReq as Request, mockRes as Response, next);
         expect(mockRes.status).toHaveBeenCalledWith(400);
     });

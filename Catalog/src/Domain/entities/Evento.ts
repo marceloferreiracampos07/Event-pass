@@ -16,15 +16,15 @@
         }
 
         if (this.estoqueTotal < 0) {
-            throw new Error("O estoque total do evento nÃ£o pode ser negativo");
+            throw new Error("O estoque total do evento não pode ser negativo");
         }
 
         if (this.estoqueDisponivel < 0) {
-            throw new Error("O estoque disponÃ­vel do evento nÃ£o pode ser negativo");
+            throw new Error("O estoque disponível do evento não pode ser negativo");
         }
 
         if (this.estoqueDisponivel > this.estoqueTotal) {
-            throw new Error("O estoque disponÃ­vel nÃ£o pode ser maior que o estoque total");
+            throw new Error("O estoque disponível não pode ser maior que o estoque total");
         }
     }
 

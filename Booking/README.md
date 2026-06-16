@@ -1,27 +1,27 @@
-# Booking Service (Motor de Reservas)
+# Booking Service
 
-Serviço de orquestração de reservas para o projeto Event Pass.
+Booking orchestration service for the Event Pass project.
 
-## Tecnologias
-- Node.js com TypeScript
+## Technologies
+- Node.js with TypeScript
 - Express
 - Prisma ORM (MySQL)
 - Redis (Pub/Sub)
-- Zod (Validação)
-- Vitest & Supertest (Testes)
+- Zod (Validation)
+- Vitest & Supertest (Testing)
 
-## Configuração
-1. Copie o arquivo `.env.example` para `.env`:
+## Configuration
+1. Copy the `.env.example` file to `.env`:
    `cp .env.example .env`
-2. Configure as variáveis de ambiente necessárias (DATABASE_URL, REDIS_URL, JWT_SECRET).
+2. Configure necessary environment variables (DATABASE_URL, REDIS_URL, JWT_SECRET).
 
 ## Status
 
-| Serviço | Cobertura | Status |
+| Service | Coverage | Status |
 | :--- | :--- | :--- |
 | **Booking** | 90% | 🟢 Production Ready |
 
-- Rodar em desenvolvimento: `npm run dev`
-- Rodar testes unitários: `npm run test:unit`
-- Rodar testes de integração: `npm run test:integration`
-- Gerar coverage: `npm run test:coverage`
+- Run in development: `npm run dev`
+- Run unit tests: `npm run test:unit`
+- Run integration tests: `npm run test:integration`
+- Generate coverage: `npm run test:coverage`

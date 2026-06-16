@@ -12,7 +12,7 @@ export const validate = (schema: AnyZodObject) => (req: Request, res: Response, 
     } catch (error) {
         if (error instanceof ZodError) {
             return res.status(400).json({
-                error: "Erro de validaÃ§Ã£o",
+                error: "Erro de validação",
                 details: error.issues.map(err => ({
                     field: err.path.join("."),
                     message: err.message

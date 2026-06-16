@@ -16,11 +16,11 @@ export class Reserva {
 
   private validar(): void {
     if (!this.eventoId || this.eventoId <= 0) {
-      throw new Error("O ID do evento Ã© obrigatÃ³rio e deve ser positivo");
+      throw new Error("O ID do evento é obrigatório e deve ser positivo");
     }
 
     if (!this.usuarioId || this.usuarioId <= 0) {
-      throw new Error("O ID do usuÃ¡rio Ã© obrigatÃ³rio e deve ser positivo");
+      throw new Error("O ID do usuário é obrigatório e deve ser positivo");
     }
 
     if (!this.quantidadeIngressos || this.quantidadeIngressos <= 0) {
@@ -28,11 +28,11 @@ export class Reserva {
     }
 
     if (!this.tipoIngresso?.trim()) {
-      throw new Error("O tipo de ingresso Ã© obrigatÃ³rio");
+      throw new Error("O tipo de ingresso é obrigatório");
     }
 
     if (!this.setor?.trim()) {
-      throw new Error("O setor Ã© obrigatÃ³rio");
+      throw new Error("O setor é obrigatório");
     }
     
     if (!this.id && this.status !== 'PENDING') {
@@ -41,20 +41,20 @@ export class Reserva {
 
     const limiteFuturo = new Date(Date.now() + 5 * 60 * 1000);
     if (this.criadoEm > limiteFuturo) {
-      throw new Error("A data de criaÃ§Ã£o não pode estar no futuro");
+      throw new Error("A data de criação não pode estar no futuro");
     }
   }
 
   public confirmar(): void {
     if (this.status !== 'PENDING') {
-      throw new Error(`não Ã© possÃ­vel confirmar uma reserva ${this.status}`);
+      throw new Error(`não é possível confirmar uma reserva ${this.status}`);
     }
     this.status = 'CONFIRMED';
   }
 
   public cancelar(): void {
     if (this.status === 'CANCELLED') {
-      throw new Error("Esta reserva jÃ¡ foi cancelada");
+      throw new Error("Esta reserva já foi cancelada");
     }
     this.status = 'CANCELLED';
   }

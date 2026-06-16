@@ -19,12 +19,14 @@ async function bootstrap() {
             useCaseCancelamento
         );
 
+import { logger } from './infrastructure/utils/logger';
+...
         const assinante = new AssinanteRedis(despachante);
         await assinante.iniciar();
 
-        console.log("Serviço de Notificação iniciado com sucesso.");
+        logger.info("Serviço de Notificação iniciado com sucesso.");
     } catch (erro) {
-        console.error("Falha ao iniciar o serviço:", erro);
+        logger.error("Falha ao iniciar o serviço:", erro);
         process.exit(1);
     }
 }

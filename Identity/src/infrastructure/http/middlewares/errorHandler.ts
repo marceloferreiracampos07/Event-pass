@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
 import { DomainError } from "../../../Domain/errors/DomainError";
+import { logger } from "../../utils/logger";
 
 export function errorHandler(
   error: Error,
@@ -25,7 +26,7 @@ export function errorHandler(
     });
   }
 
-  console.error(error); // Log internal errors
+  logger.error(error); // Log internal errors
 
   return response.status(500).json({
     status: "error",

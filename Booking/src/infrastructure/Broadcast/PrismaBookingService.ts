@@ -1,6 +1,7 @@
-﻿import { IEventBroadcaster } from "../../Domain/Broadcast/IEventBroadcaster";
+import { IEventBroadcaster } from "../../Domain/Broadcast/IEventBroadcaster";
 import { createClient } from "redis";
 import { configuracao } from "../config/configuracao";
+import { logger } from "../utils/logger";
 
 export class RedisBroadcastService implements IEventBroadcaster {
     private client: ReturnType<typeof createClient>;
@@ -17,7 +18,7 @@ export class RedisBroadcastService implements IEventBroadcaster {
         });
 
         this.client.on("error", (err) => {
-            console.error("Erro no cliente Redis:", err);
+            logger.error("Erro no cliente Redis:", err);
         });
     }
 
@@ -29,4 +30,3 @@ export class RedisBroadcastService implements IEventBroadcaster {
         await this.client.publish(channel, message);
     }
 }
-

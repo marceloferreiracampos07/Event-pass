@@ -35,7 +35,7 @@ describe('RejeitarReservaUseCase', () => {
         expect(mockTransmissor.publish).toHaveBeenCalled();
     });
 
-    it('deve lanÃ§ar erro se a reserva não existir', async () => {
+    it('deve lançar erro se a reserva não existir', async () => {
         vi.spyOn(mockRepositorio, 'buscarPorId').mockResolvedValue(null);
         await expect(useCase.executar({ id: 99 })).rejects.toThrow('Reserva com ID 99 não encontrada');
     });

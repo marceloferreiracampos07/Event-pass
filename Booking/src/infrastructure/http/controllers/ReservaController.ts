@@ -1,8 +1,8 @@
-import { Request, Response } from "express"
+import { Request, Response, NextFunction } from "express"
 import { CriarReservaUseCase } from "../../../application/useCases/criar-reserva/CriarReservaUseCase"
 import { ConfirmarReservaUseCase } from "../../../application/useCases/confirmar-reserva/ConfirmarReservaUseCase"
 import { RejeitarReservaUseCase } from "../../../application/useCases/rejeitar-reserva/RejeitarReservaUseCase"
-import { DomainError, BookingValidationError } from "../../../Domain/errors/DomainError"
+import { BookingValidationError } from "../../../Domain/errors/DomainError"
 import { CriarReservaInput } from "../../../application/useCases/Dto/CriarReservaInput"
 
 export class ReservaController {
@@ -12,12 +12,9 @@ export class ReservaController {
         private readonly rejeitarReserva: RejeitarReservaUseCase
     ) {}
 
-    async Criar(req: Request, res: Response): Promise<Response> {
+    async Criar(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const usuario = (req as any).user;
-            if (!usuario?.id) {
-                return res.status(401).json({ erro: "Usuário n�o autenticado" });
-            }
 
             const { eventoId, quantidadeIngressos, tipoIngresso, setor } = req.body;
 
@@ -30,50 +27,40 @@ export class ReservaController {
             };
 
             const saida = await this.criarReserva.executar(entrada);
-            return res.status(201).json(saida);
+            res.status(201).json(saida);
 
         } catch (erro: any) {
-            if (erro instanceof DomainError) {
-                return res.status(erro.statusCode).json({ erro: erro.message, codigo: erro.errorCode });
-            }
-            return res.status(400).json({ erro: erro.message || "Erro na requisição", codigo: "ERRO_VALIDACAO" });
+            next(erro);
         }
     }
 
-    async Confirmar(req: Request, res: Response): Promise<Response> {
+    async Confirmar(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const reserva = (req as any).booking;
             if (!reserva || reserva.status !== "PENDING") {
-                throw new BookingValidationError("Esta reserva n�o está mais pendente ou n�o foi encontrada");
+                throw new BookingValidationError("Esta reserva não está mais pendente ou não foi encontrada");
             }
 
             const saida = await this.confirmarReserva.executar({ id: Number(reserva.id) });
-            return res.status(200).json(saida);
+            res.status(200).json(saida);
 
         } catch (erro: any) {
-            if (erro instanceof DomainError) {
-                return res.status(erro.statusCode).json({ erro: erro.message, codigo: erro.errorCode });
-            }
-            console.error("DEBUG - ReservaController - Erro:", erro); return res.status(500).json({ erro: erro.message || "Erro interno no servidor", codigo: "ERRO_INTERNO_SERVIDOR" });
+            next(erro);
         }
     }
 
-    async Rejeitar(req: Request, res: Response): Promise<Response> {
+    async Rejeitar(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const reserva = (req as any).booking;
             if (!reserva || reserva.status !== "PENDING") {
-                throw new BookingValidationError("Esta reserva n�o está mais pendente ou n�o foi encontrada");
+                throw new BookingValidationError("Esta reserva não está mais pendente ou não foi encontrada");
             }
 
             const saida = await this.rejeitarReserva.executar({ id: Number(reserva.id) });
-            return res.status(200).json(saida);
+            res.status(200).json(saida);
 
         } catch (erro: any) {
-            if (erro instanceof DomainError) {
-                return res.status(erro.statusCode).json({ erro: erro.message, codigo: erro.errorCode });
-            }
-            console.error("DEBUG - ReservaController - Erro:", erro); return res.status(500).json({ erro: erro.message || "Erro interno no servidor", codigo: "ERRO_INTERNO_SERVIDOR" });
+            next(erro);
         }
     }
 }
-

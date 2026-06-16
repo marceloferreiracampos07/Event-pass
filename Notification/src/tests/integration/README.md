@@ -1,2 +1,2 @@
-# Testes de Infraestrutura
-Esta pasta conterá testes relacionados a componentes de infraestrutura, como a conexão com o Redis.
+# Infrastructure Tests
+This folder contains tests related to infrastructure components, such as Redis connection.

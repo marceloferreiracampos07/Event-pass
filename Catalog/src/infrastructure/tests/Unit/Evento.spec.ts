@@ -1,11 +1,11 @@
 ﻿import { describe, it, expect } from "vitest";
 import { Evento } from "../../../Domain/entities/Evento"; 
 
-describe("Evento (Entidade de DomÃ­nio)", () => {
+describe("Evento (Entidade de Domínio)", () => {
     const DATA_VALIDA = new Date();
     DATA_VALIDA.setDate(DATA_VALIDA.getDate() + 1);
 
-    it("deve criar uma instÃ¢ncia de evento vÃ¡lida com sucesso", () => {
+    it("deve criar uma instância de evento válida com sucesso", () => {
         
         const evento = new Evento("id-1", "Show de Rock", DATA_VALIDA, 100, 100);
 
@@ -17,7 +17,7 @@ describe("Evento (Entidade de DomÃ­nio)", () => {
     });
 
     describe("ValidaÃ§Ãµes do Construtor", () => {
-        it("deve lanÃ§ar erro se o nome for vazio ou menor que 3 caracteres", () => {
+        it("deve lançar erro se o nome for vazio ou menor que 3 caracteres", () => {
             expect(() => new Evento("id-1", "", DATA_VALIDA, 100, 100))
                 .toThrow("O nome do evento deve ter pelo menos 3 caracteres");
 
@@ -25,24 +25,24 @@ describe("Evento (Entidade de DomÃ­nio)", () => {
                 .toThrow("O nome do evento deve ter pelo menos 3 caracteres");
         });
 
-        it("deve lanÃ§ar erro se o estoque total for negativo", () => {
+        it("deve lançar erro se o estoque total for negativo", () => {
             expect(() => new Evento("id-1", "Show de Rock", DATA_VALIDA, -5, 100))
-                .toThrow("O estoque total do evento nÃ£o pode ser negativo");
+                .toThrow("O estoque total do evento não pode ser negativo");
         });
 
-        it("deve lanÃ§ar erro se o estoque disponÃ­vel for negativo", () => {
+        it("deve lançar erro se o estoque disponível for negativo", () => {
             expect(() => new Evento("id-1", "Show de Rock", DATA_VALIDA, 100, -1))
-                .toThrow("O estoque disponÃ­vel do evento nÃ£o pode ser negativo");
+                .toThrow("O estoque disponível do evento não pode ser negativo");
         });
 
-        it("deve lanÃ§ar erro se o estoque disponÃ­vel for maior que o estoque total", () => {
+        it("deve lançar erro se o estoque disponível for maior que o estoque total", () => {
             expect(() => new Evento("id-1", "Show de Rock", DATA_VALIDA, 100, 150))
-                .toThrow("O estoque disponÃ­vel nÃ£o pode ser maior que o estoque total");
+                .toThrow("O estoque disponível não pode ser maior que o estoque total");
         });
     });
 
-    describe("MÃ©todo: baixarEstoque", () => {
-        it("deve reduzir o estoque disponÃ­vel com sucesso quando a quantidade for vÃ¡lida", () => {
+    describe("Método: baixarEstoque", () => {
+        it("deve reduzir o estoque disponível com sucesso quando a quantidade for válida", () => {
             
             const evento = new Evento("id-1", "Show de Rock", DATA_VALIDA, 100, 100);
 
@@ -53,7 +53,7 @@ describe("Evento (Entidade de DomÃ­nio)", () => {
             expect(evento.estoqueDisponivel).toBe(90);
         });
 
-        it("deve lanÃ§ar erro se a quantidade de baixa for menor ou igual a zero", () => {
+        it("deve lançar erro se a quantidade de baixa for menor ou igual a zero", () => {
             
             const evento = new Evento("id-1", "Show de Rock", DATA_VALIDA, 100, 100);
 
@@ -65,7 +65,7 @@ describe("Evento (Entidade de DomÃ­nio)", () => {
                 .toThrow("A quantidade a ser baixada deve ser maior que zero");
         });
 
-        it("deve lanÃ§ar erro se a quantidade solicitada for maior que o estoque disponÃ­vel", () => {
+        it("deve lançar erro se a quantidade solicitada for maior que o estoque disponível", () => {
             
             const evento = new Evento("id-1", "Show de Rock", DATA_VALIDA, 100, 10);
 

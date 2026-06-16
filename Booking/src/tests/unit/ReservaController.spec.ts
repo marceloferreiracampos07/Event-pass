@@ -36,14 +36,14 @@ describe('ReservaController', () => {
             expect(mockRes.json).toHaveBeenCalledWith({ id: 1, status: 'PENDING' });
         });
 
-        it('deve retornar 401 se usuÃ¡rio não autenticado', async () => {
+        it('deve retornar 401 se usuário não autenticado', async () => {
             mockReq.user = undefined;
             await controller.Criar(mockReq as Request, mockRes as Response);
             expect(mockRes.status).toHaveBeenCalledWith(401);
         });
 
-        it('deve retornar 400 em caso de erro de domÃ­nio na criaÃ§Ã£o', async () => {
-            const domainError = new DomainError('Erro de domÃ­nio');
+        it('deve retornar 400 em caso de erro de domínio na criaÃ§ão', async () => {
+            const domainError = new DomainError('Erro de domínio');
             (domainError as any).statusCode = 400;
             (domainError as any).errorCode = 'ERR_DOMAIN';
             mockCriarReserva.executar.mockRejectedValue(domainError);
@@ -52,7 +52,7 @@ describe('ReservaController', () => {
             expect(mockRes.status).toHaveBeenCalledWith(400);
         });
 
-        it('deve retornar 400 em caso de erro genÃ©rico na criaÃ§Ã£o', async () => {
+        it('deve retornar 400 em caso de erro genérico na criaÃ§ão', async () => {
             mockCriarReserva.executar.mockRejectedValue(new Error('Erro inesperado'));
 
             await controller.Criar(mockReq as Request, mockRes as Response);
@@ -76,9 +76,9 @@ describe('ReservaController', () => {
             expect(mockRes.status).toHaveBeenCalledWith(400);
         });
 
-        it('deve retornar erro de domÃ­nio na confirmaÃ§Ã£o', async () => {
+        it('deve retornar erro de domínio na confirmaÃ§ão', async () => {
             (mockReq as any).booking = { id: 1, status: 'PENDING' };
-            const domainError = new DomainError('Erro de confirmaÃ§Ã£o');
+            const domainError = new DomainError('Erro de confirmaÃ§ão');
             (domainError as any).statusCode = 422;
             mockConfirmarReserva.executar.mockRejectedValue(domainError);
 
@@ -86,7 +86,7 @@ describe('ReservaController', () => {
             expect(mockRes.status).toHaveBeenCalledWith(422);
         });
 
-        it('deve retornar 500 em erro genÃ©rico na confirmaÃ§Ã£o', async () => {
+        it('deve retornar 500 em erro genérico na confirmaÃ§ão', async () => {
             (mockReq as any).booking = { id: 1, status: 'PENDING' };
             mockConfirmarReserva.executar.mockRejectedValue(new Error('Erro fatal'));
 
@@ -111,9 +111,9 @@ describe('ReservaController', () => {
             expect(mockRes.status).toHaveBeenCalledWith(400);
         });
 
-        it('deve retornar erro de domÃ­nio na rejeiÃ§Ã£o', async () => {
+        it('deve retornar erro de domínio na rejeiÃ§ão', async () => {
             (mockReq as any).booking = { id: 1, status: 'PENDING' };
-            const domainError = new DomainError('Erro de rejeiÃ§Ã£o');
+            const domainError = new DomainError('Erro de rejeiÃ§ão');
             (domainError as any).statusCode = 422;
             mockRejeitarReserva.executar.mockRejectedValue(domainError);
 
@@ -121,7 +121,7 @@ describe('ReservaController', () => {
             expect(mockRes.status).toHaveBeenCalledWith(422);
         });
 
-        it('deve retornar 500 em erro genÃ©rico na rejeiÃ§Ã£o', async () => {
+        it('deve retornar 500 em erro genérico na rejeiÃ§ão', async () => {
             (mockReq as any).booking = { id: 1, status: 'PENDING' };
             mockRejeitarReserva.executar.mockRejectedValue(new Error('Erro fatal'));
 

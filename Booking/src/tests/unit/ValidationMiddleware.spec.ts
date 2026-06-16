@@ -17,14 +17,14 @@ describe('ValidationMiddleware', () => {
         next = vi.fn();
     });
 
-    it('deve chamar o next se a validaÃ§Ã£o passar', () => {
+    it('deve chamar o next se a validaÃ§ão passar', () => {
         const schema = z.object({ body: z.object({ name: z.string() }) });
         mockReq.body = { name: 'test' };
         validate(schema)(mockReq as Request, mockRes as Response, next);
         expect(next).toHaveBeenCalled();
     });
 
-    it('deve retornar 400 se a validaÃ§Ã£o falhar', () => {
+    it('deve retornar 400 se a validaÃ§ão falhar', () => {
         const schema = z.object({ body: z.object({ name: z.string() }) });
         mockReq.body = { name: 123 };
         validate(schema)(mockReq as Request, mockRes as Response, next);

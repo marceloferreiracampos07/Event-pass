@@ -5,7 +5,7 @@ export const loadBookingMiddleware = async (req: Request, res: Response, next: N
     const { id } = req.params;
 
     if (!id || isNaN(Number(id))) {
-        return res.status(400).json({ error: "ID da reserva invÃ¡lido" });
+        return res.status(400).json({ error: "ID da reserva inválido" });
     }
 
     try {

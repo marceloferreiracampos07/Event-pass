@@ -24,7 +24,7 @@ describe('AuthMiddleware', () => {
         configuracao.jwtSegredo = segredoOriginal;
     });
 
-    it('deve retornar 401 se não houver header de autorizaÃ§Ã£o', () => {
+    it('deve retornar 401 se não houver header de autorizaÃ§ão', () => {
         authMiddleware(mockReq as Request, mockRes as Response, next);
         expect(mockRes.status).toHaveBeenCalledWith(401);
     });
