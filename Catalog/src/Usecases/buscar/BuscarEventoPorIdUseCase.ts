@@ -15,7 +15,6 @@ export class BuscarEventoPorIdUseCase {
             return null;
         }
 
-        // Ad-hoc calculation: Total - Confirmed Bookings
         const reservasConfirmadas = await this.bookingClient.getConfirmedCount(Number(evento.id));
         const estoqueDisponivel = Math.max(0, evento.estoqueTotal - reservasConfirmadas);
 
