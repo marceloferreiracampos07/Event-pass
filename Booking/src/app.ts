@@ -50,6 +50,10 @@ if (configuracao.ambiente !== 'test') {
 }
 
 import { errorHandler } from './infrastructure/http/Middleware/errorHandler';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './infrastructure/config/swaggerConfig';
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(errorHandler);
 
 export { app, prisma };

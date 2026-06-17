@@ -33,7 +33,7 @@ export const validarConfiguracao = (): void => {
 
     for (const campo of camposObrigatorios) {
         if (process.env[campo] === undefined) {
-            throw new Error(`ERRO DE CONFIGURAÃ‡ÃƒO CRÃTICO: A variável ${campo} não foi definida no arquivo .env`);
+            throw new Error(`ERRO DE CONFIGURAÇÃO CRÍTICO: A variável ${campo} não foi definida no arquivo .env`);
         }
     }
 };

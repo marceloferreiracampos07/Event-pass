@@ -25,6 +25,10 @@ app.use(express.json());
 
 app.use('/api/v1/events', eventRoutes);
 
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swaggerConfig';
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.get('/', (req, res) => {
     res.send("ok");
 });

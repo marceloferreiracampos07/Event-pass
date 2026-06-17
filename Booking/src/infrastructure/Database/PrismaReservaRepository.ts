@@ -1,9 +1,22 @@
-﻿import { Reserva, StatusReserva } from "../../Domain/entities/Reserva";
+import { Reserva, StatusReserva } from "../../Domain/entities/Reserva";
 import { PrismaClient } from "../../generated/prisma"
 import { IReservaRepository } from "../../Domain/repositories/IReservaRepository";
 
 export class PrismaReservaRepository implements IReservaRepository {
     constructor(private prisma: PrismaClient) {}
+
+    private toEntity(resultado: any): Reserva {
+        return new Reserva(
+            resultado.eventId,
+            resultado.userId,
+            resultado.quantidadeIngressos,
+            resultado.tipoIngresso,
+            resultado.setor,
+            resultado.status as StatusReserva,
+            resultado.id,
+            resultado.createdAt
+        );
+    }
 
     async criar(reserva: Reserva): Promise<Reserva> {
         const resultado = await this.prisma.booking.create({
@@ -17,16 +30,7 @@ export class PrismaReservaRepository implements IReservaRepository {
                 createdAt: reserva.criadoEm
             }
         });    
-        return new Reserva(
-            resultado.eventId,
-            resultado.userId,
-            resultado.quantidadeIngressos,
-            resultado.tipoIngresso,
-            resultado.setor,
-            resultado.status as StatusReserva,
-            resultado.id,
-            resultado.createdAt
-        );
+        return this.toEntity(resultado);
     }
 
     async buscarPorId(id: number): Promise<Reserva | null> {
@@ -36,16 +40,7 @@ export class PrismaReservaRepository implements IReservaRepository {
 
         if (!resultado) return null;
 
-        return new Reserva(
-            resultado.eventId,
-            resultado.userId,
-            resultado.quantidadeIngressos,
-            resultado.tipoIngresso,
-            resultado.setor,
-            resultado.status as StatusReserva,
-            resultado.id,
-            resultado.createdAt
-        );
+        return this.toEntity(resultado);
     }
 
     async atualizarStatus(id: number, status: StatusReserva): Promise<void> {
@@ -60,16 +55,6 @@ export class PrismaReservaRepository implements IReservaRepository {
             where: { userId: usuarioId }
         });
 
-        return resultados.map(resultado => new Reserva(
-            resultado.eventId,
-            resultado.userId,
-            resultado.quantidadeIngressos,
-            resultado.tipoIngresso,
-            resultado.setor,
-            resultado.status as StatusReserva,
-            resultado.id,
-            resultado.createdAt
-        ));
+        return resultados.map(resultado => this.toEntity(resultado));
     }
 }
-
