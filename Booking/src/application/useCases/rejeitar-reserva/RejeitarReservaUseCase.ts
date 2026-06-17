@@ -1,16 +1,8 @@
-﻿import { IReservaRepository } from "../../../Domain/repositories/IReservaRepository";
+import { IReservaRepository } from "../../../Domain/repositories/IReservaRepository";
 import { IEventBroadcaster } from "../../../Domain/Broadcast/IEventBroadcaster";
 import { BookingChannels } from "../../../Domain/Broadcast/BookingChannels";
-
-export interface RejeitarReservaInput {
-    id: number;
-}
-
-export interface RejeitarReservaOutput {
-    id: number;
-    status: string;
-    mensagem: string;
-}
+import { RejeitarBookingInput } from "../Dto/RejeitarBookingInput";
+import { RejeitarBookingOutput } from "../Dto/RejeitarBookingOutput";
 
 export class RejeitarReservaUseCase {
     constructor(
@@ -18,7 +10,7 @@ export class RejeitarReservaUseCase {
         private transmissorEvento: IEventBroadcaster
     ) {}
 
-    async executar(entrada: RejeitarReservaInput): Promise<RejeitarReservaOutput> {
+    async executar(entrada: RejeitarBookingInput): Promise<RejeitarBookingOutput> {
         const reserva = await this.repositorioReserva.buscarPorId(entrada.id);
         
         if (!reserva) {
@@ -41,8 +33,7 @@ export class RejeitarReservaUseCase {
         return {
             id: entrada.id,
             status: reserva.status,
-            mensagem: "Reserva rejeitada com sucesso"
+            message: "Reserva rejeitada com sucesso"
         };
     }
 }
-

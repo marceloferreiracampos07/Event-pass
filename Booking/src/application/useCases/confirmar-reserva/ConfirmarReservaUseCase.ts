@@ -1,16 +1,8 @@
-﻿import { IReservaRepository } from "../../../Domain/repositories/IReservaRepository";
+import { IReservaRepository } from "../../../Domain/repositories/IReservaRepository";
 import { IEventBroadcaster } from "../../../Domain/Broadcast/IEventBroadcaster";
 import { BookingChannels } from "../../../Domain/Broadcast/BookingChannels";
-
-export interface ConfirmarReservaInput {
-    id: number;
-}
-
-export interface ConfirmarReservaOutput {
-    id: number;
-    status: string;
-    mensagem: string;
-}
+import { ConfirmarBookingInput } from "../Dto/ConfirmarBookingInput";
+import { ConfirmarBookingOutput } from "../Dto/ConfirmarBookingOutput";
 
 export class ConfirmarReservaUseCase {
     constructor(
@@ -18,7 +10,7 @@ export class ConfirmarReservaUseCase {
         private transmissorEvento: IEventBroadcaster
     ) {}
 
-    async executar(entrada: ConfirmarReservaInput): Promise<ConfirmarReservaOutput> {
+    async executar(entrada: ConfirmarBookingInput): Promise<ConfirmarBookingOutput> {
         const reserva = await this.repositorioReserva.buscarPorId(entrada.id);
         
         if (!reserva) {
@@ -41,8 +33,7 @@ export class ConfirmarReservaUseCase {
         return {
             id: entrada.id,
             status: reserva.status,
-            mensagem: "Reserva confirmada com sucesso!"
+            message: "Reserva confirmada com sucesso!"
         };
     }
 }
-
