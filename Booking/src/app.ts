@@ -7,7 +7,9 @@ import { ExternalEventService } from './infrastructure/Services/ExternalEventSer
 import { CriarReservaUseCase } from './application/useCases/criar-reserva/CriarReservaUseCase';
 import { ConfirmarReservaUseCase } from './application/useCases/confirmar-reserva/ConfirmarReservaUseCase';
 import { RejeitarReservaUseCase } from './application/useCases/rejeitar-reserva/RejeitarReservaUseCase';   
-import { ReservaController } from './infrastructure/http/controllers/ReservaController';
+import { CriarReservaController } from './infrastructure/http/controllers/CriarReservaController';
+import { ConfirmarReservaController } from './infrastructure/http/controllers/ConfirmarReservaController';
+import { RejeitarReservaController } from './infrastructure/http/controllers/RejeitarReservaController';
 import { criarRotasReserva } from './infrastructure/http/routes/ReservaRoutes';
 import { configuracao, validarConfiguracao } from './infrastructure/config/configuracao';
 import { logger } from './infrastructure/utils/logger';
@@ -34,13 +36,11 @@ const criarReservaUseCase = new CriarReservaUseCase(repositorioReserva, servicoE
 const confirmarReservaUseCase = new ConfirmarReservaUseCase(repositorioReserva, servicoTransmissao);
 const rejeitarReservaUseCase = new RejeitarReservaUseCase(repositorioReserva, servicoTransmissao);
 
-const reservaController = new ReservaController(
-    criarReservaUseCase,
-    confirmarReservaUseCase,
-    rejeitarReservaUseCase
-);
+const criarController = new CriarReservaController(criarReservaUseCase);
+const confirmarController = new ConfirmarReservaController(confirmarReservaUseCase);
+const rejeitarController = new RejeitarReservaController(rejeitarReservaUseCase);
 
-app.use('/api/v1/bookings', criarRotasReserva(reservaController));
+app.use('/api/v1/bookings', criarRotasReserva(criarController, confirmarController, rejeitarController));
 
 if (configuracao.ambiente !== 'test') {
     const PORT = configuracao.porta;
