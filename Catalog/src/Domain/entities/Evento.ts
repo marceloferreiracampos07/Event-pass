@@ -17,5 +17,9 @@ export class Evento {
         if (this.estoqueTotal < 0) {
             throw new Error("O estoque total do evento não pode ser negativo");
         }
+
+        if (this.data.getTime() < new Date().getTime()) {
+            throw new Error("A data do evento não pode ser no passado");
+        }
     }
 }

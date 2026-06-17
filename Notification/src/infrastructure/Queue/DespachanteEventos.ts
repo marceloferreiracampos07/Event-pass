@@ -2,6 +2,7 @@ import { NotificarConfirmacaoUseCase } from "../../application/useCases/notifica
 import { NotificarRejeicaoUseCase } from "../../application/useCases/notificar-rejeicao/NotificarRejeicaoUseCase";
 import { NotificarCancelamentoUseCase } from "../../application/useCases/notificar-cancelamento/NotificarCancelamentoUseCase";
 import { PayloadEventoReserva } from "../../application/useCases/Dto/PayloadEventoReserva";
+import { logger } from "../utils/logger";
 
 export class DespachanteEventos {
     constructor(
@@ -26,11 +27,11 @@ export class DespachanteEventos {
             if (casoDeUso) {
                 await casoDeUso.executar(evento);
             } else {
-                console.warn(`Status não mapeado recebido: ${status}`);
+                throw new Error(`Status não mapeado recebido: ${status}`);
             }
 
         } catch (erro) {
-            console.error("Erro ao processar mensagem do Redis:", erro);
+            logger.error("Erro ao processar mensagem do Redis:", erro);
         }
     }
 }

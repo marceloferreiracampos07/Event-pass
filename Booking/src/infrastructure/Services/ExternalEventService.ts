@@ -11,7 +11,7 @@ export class ExternalEventService implements IEventService {
         const bookingUrl = process.env.BOOKING_SERVICE_URL;
 
         if (!catalogUrl || !bookingUrl) {
-            throw new Error("Missing required environment variables: CATALOG_SERVICE_URL or BOOKING_SERVICE_URL");
+            throw new Error("Variáveis ​​de ambiente obrigatórias ausentes: CATALOG_SERVICE_URL ou BOOKING_SERVICE_URL");
         }
 
         this.catalogServiceUrl = catalogUrl;
@@ -32,7 +32,7 @@ export class ExternalEventService implements IEventService {
 
             return estoqueDisponivel >= quantidade;
         } catch (error) {
-            logger.error(`Error checking availability for event ${eventId}:`, error);
+            logger.error(`Erro ao verificar a disponibilidade do evento ${eventId}:`, error);
             return false;
         }
     }

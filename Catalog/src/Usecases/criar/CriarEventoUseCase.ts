@@ -10,18 +10,11 @@ export class CriarEventoUseCase {
     ) {}
     async execute(entrada: CriarEventoInputDto): Promise<CriarEventoOutputDto> {
         const dataDoEvento = new Date(entrada.data);
-        const agora = new Date();
-
-
-        if (dataDoEvento.getTime() < agora.getTime()) {
-            throw new Error("Data invalida");
-        }
 
         const novoEvento = new Evento(
             crypto.randomUUID(),
             entrada.nome,
             dataDoEvento,
-            entrada.estoqueTotal,
             entrada.estoqueTotal
         );
         await this.repositorioevento.salvar(novoEvento);
@@ -30,7 +23,7 @@ export class CriarEventoUseCase {
             nome: novoEvento.nome,
             data: novoEvento.data,
             estoqueTotal: novoEvento.estoqueTotal,
-            estoqueDisponivel: novoEvento.estoqueDisponivel
+            estoqueDisponivel: novoEvento.estoqueTotal // Assumindo cálculo simplificado aqui
         };
     }
 }
