@@ -1,7 +1,7 @@
-﻿import { Request, Response, NextFunction } from "express";
-import { AnyZodObject, ZodError } from "zod";
+import { NextFunction, Request, Response } from "express";
+import { z, ZodError } from "zod";
 
-export const validate = (schema: AnyZodObject) => (req: Request, res: Response, next: NextFunction) => {
+export const validate = (schema: z.ZodTypeAny) => (req: Request, res: Response, next: NextFunction) => {
     try {
         schema.parse({
             body: req.body,
@@ -19,7 +19,8 @@ export const validate = (schema: AnyZodObject) => (req: Request, res: Response, 
                 }))
             });
         }
-        return res.status(500).json({ error: "Internal Server Error" });
+        
+        
+        next(error);
     }
 };
-

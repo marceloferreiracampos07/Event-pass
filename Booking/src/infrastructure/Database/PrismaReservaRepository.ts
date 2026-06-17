@@ -57,4 +57,13 @@ export class PrismaReservaRepository implements IReservaRepository {
 
         return resultados.map(resultado => this.toEntity(resultado));
     }
+
+    async countConfirmedByEventId(eventId: number): Promise<number> {
+        return await this.prisma.booking.count({
+            where: {
+                eventId,
+                status: 'CONFIRMED'
+            }
+        });
+    }
 }

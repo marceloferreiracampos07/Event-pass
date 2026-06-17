@@ -1,4 +1,4 @@
-﻿import express from 'express';
+import express from 'express';
 import morgan from 'morgan';
 import { PrismaClient } from './generated/prisma';
 import { PrismaReservaRepository } from './infrastructure/Database/PrismaReservaRepository';
@@ -10,6 +10,7 @@ import { RejeitarReservaUseCase } from './application/useCases/rejeitar-reserva/
 import { CriarReservaController } from './infrastructure/http/controllers/CriarReservaController';
 import { ConfirmarReservaController } from './infrastructure/http/controllers/ConfirmarReservaController';
 import { RejeitarReservaController } from './infrastructure/http/controllers/RejeitarReservaController';
+import { CountConfirmedController } from './infrastructure/http/controllers/CountConfirmedController';
 import { criarRotasReserva } from './infrastructure/http/routes/ReservaRoutes';
 import { configuracao, validarConfiguracao } from './infrastructure/config/configuracao';
 import { logger } from './infrastructure/utils/logger';
@@ -39,8 +40,9 @@ const rejeitarReservaUseCase = new RejeitarReservaUseCase(repositorioReserva, se
 const criarController = new CriarReservaController(criarReservaUseCase);
 const confirmarController = new ConfirmarReservaController(confirmarReservaUseCase);
 const rejeitarController = new RejeitarReservaController(rejeitarReservaUseCase);
+const countController = new CountConfirmedController(repositorioReserva);
 
-app.use('/api/v1/bookings', criarRotasReserva(criarController, confirmarController, rejeitarController));
+app.use('/api/v1/bookings', criarRotasReserva(criarController, confirmarController, rejeitarController, countController));
 
 if (configuracao.ambiente !== 'test') {
     const PORT = configuracao.porta;
@@ -57,4 +59,3 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(errorHandler);
 
 export { app, prisma };
-

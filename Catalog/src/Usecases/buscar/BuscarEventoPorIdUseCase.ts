@@ -1,22 +1,30 @@
 import { IrepositorioEvento } from "../../Domain/repositories/IRepositorioEvento";
 import { BuscarEventoPorIdInputDto } from "../dto/BuscarEventoPorIdInputDto";
 import { BuscarEventoPorIdOutputDto } from "../dto/BuscarEventoPorIdOutputDto";
-import { Evento } from "../../Domain/entities/Evento";
+import { BookingClient } from "../../infrastructure/http/Services/BookingClient";
 
 export class BuscarEventoPorIdUseCase {
-    constructor(private readonly repositorio: IrepositorioEvento) {}
+    constructor(
+        private readonly repositorio: IrepositorioEvento,
+        private readonly bookingClient: BookingClient
+    ) {}
 
     async execute(input: BuscarEventoPorIdInputDto): Promise<BuscarEventoPorIdOutputDto | null> {
         const evento = await this.repositorio.buscarPorId(input.id);
-        if (!evento){
-            throw new Error("Evento nao encontrado");
-        };
+        if (!evento) {
+            return null;
+        }
+
+        // Ad-hoc calculation: Total - Confirmed Bookings
+        const reservasConfirmadas = await this.bookingClient.getConfirmedCount(Number(evento.id));
+        const estoqueDisponivel = Math.max(0, evento.estoqueTotal - reservasConfirmadas);
+
         return {
             id: evento.id,
             nome: evento.nome,
             data: evento.data,
             estoqueTotal: evento.estoqueTotal,
-            estoqueDisponivel: evento.estoqueDisponivel
+            estoqueDisponivel: estoqueDisponivel
         };
     }
 }

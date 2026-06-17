@@ -7,14 +7,16 @@ import { CriarEventoUseCase } from '../../../Usecases/criar/CriarEventoUseCase';
 import { ListarEventosUseCase } from '../../../Usecases/listar/ListarEventosUseCase';
 import { BuscarEventoPorIdUseCase } from '../../../Usecases/buscar/BuscarEventoPorIdUseCase';
 import { PrismaEventoRepository } from '../../Database/PrismaEventoRepository';
+import { BookingClient } from '../Services/BookingClient';
 
 export const eventRoutes = Router();
 
 const repo = new PrismaEventoRepository();
+const bookingClient = new BookingClient();
 
 const criarEventoUseCase = new CriarEventoUseCase(repo);
 const listarEventosUseCase = new ListarEventosUseCase(repo);
-const buscarEventoPorIdUseCase = new BuscarEventoPorIdUseCase(repo);
+const buscarEventoPorIdUseCase = new BuscarEventoPorIdUseCase(repo, bookingClient);
 
 const criarEventoController = new CriarEventoController(criarEventoUseCase);
 const listarEventosController = new ListarEventosController(listarEventosUseCase);
